@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>Item Details</title>
+    <link href={{ url_for("static", path='/styles.css') }} rel='stylesheet'>
+</head>
+<body>
+    <div>
+        <form>
+            <label for="sid">Student No.</label><br>
+            <input type="text" id="sid" name="sid" autofocus>
+            <p><input type="submit"></p>
+        </form>
+    </div>
+    <h3>{{ sid }} - {{ name }}</h3>
+    <ul>
+        <li>Qtrs Used: {{ qtrs_used }}</li>
+        <li>UW Email: {{ uw_email }}</li>
+        <li>Alt. Email: {{ other_email }}</li>
+        <li>Campus: {{ campus }}</li>
+        <li>Major Dept.: {{ major }}</li>
+        <li>Degree {{ degree }}</li>
+        <li>Degree Status: {{ degree_status }}</li>
+        <li>Degree Earned: {{ degree_earnrd }}</li>
+    </ul>
+</body>
+</html>
