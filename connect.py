@@ -2,7 +2,7 @@ import pyodbc
 import sys
 from pathlib import Path
 
-# import preferences
+import preferences
 
 
 server = r'edwpub.s.uw.edu'
@@ -11,8 +11,8 @@ database = r'UWSDBDataStore'
 ## Users must add a file a the same level as this module. Name the file 'preferences.py' and add:
 ## USERNAME = 'NETID\<your username>'
 ## PWD = '<your password>'
-# username = preferences.USERNAME
-# password = preferences.PWD
+username = preferences.USERNAME
+password = preferences.PWD
 
 
 
