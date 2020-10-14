@@ -2,6 +2,19 @@ h1 {
     color: rgb(15, 6, 102)
 }
 
+h2 {
+    color: black
+}
+
 h3 {
     color: black
+}
+
+body {
+    background-color: darkgrey;
+
+}
+
+li.listHeader {
+    font-weight: bold
 }
