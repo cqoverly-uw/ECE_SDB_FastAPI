@@ -13,18 +13,12 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
 
-@app.get("/")
-async def index():
-    return {
-        "Tag": "Hello, World",
-        "Tag 2:": "Today is a better day!"
-        }
-
+@app.get("/", response_class=HTMLResponse)
+async def index(request: Request):
+    return(templates.TemplateResponse("index.html", {"request": request}))
 
 @app.get("/items/{id}", response_class=HTMLResponse)
 async def read_item(request: Request, id:str):
-    for k, v in request.items():
-        print(f'{k}: {v}')
     return(templates.TemplateResponse("item.html", {"request": request, "id": id}))
 
 
