@@ -23,7 +23,7 @@ SELECT
 		WHEN di.deg_status BETWEEN 3 AND 5 THEN 'APPLIED'
 		WHEN di.deg_status = 1 THEN 'WITHDRAWN'
 		WHEN di.deg_status = 9 THEN 'GRANTED'
-		ELSE di.deg_status
+		ELSE 'None'
 	END deg_status,
 	di.deg_earned_yr,
 	CASE di.deg_earned_qtr
