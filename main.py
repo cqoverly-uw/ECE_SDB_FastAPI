@@ -28,7 +28,6 @@ async def get_student_info_from_sid(request: Request, sid: str=None):
         sql = sql_scripts.info_from_sid
         student_info = connect.get_student_data(sql, sid)
         student_info["request"] = request
-
         return(templates.TemplateResponse("student_info.html", student_info))
     else:
         return(templates.TemplateResponse("student_info.html", {"request":request}))
