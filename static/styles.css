@@ -1,13 +1,13 @@
 h1 {
-    color: rgb(15, 6, 102)
+    color: rgb(15, 6, 102);
 }
 
 h2 {
-    color: black
+    color: black;
 }
 
 h3 {
-    color: black
+    color: black;
 }
 
 body {
@@ -16,5 +16,18 @@ body {
 }
 
 li.listHeader {
-    font-weight: bold
+    font-weight: bold;
 }
+
+table, th, td {
+    border: 1px solid black;
+}
+
+table.center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  th, tr, td {
+    padding: 10px;
+  }

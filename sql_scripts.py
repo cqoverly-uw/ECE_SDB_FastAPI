@@ -46,3 +46,57 @@ WHERE s1.student_no = (?)
 ;
 '''
 
+course_history = """
+SELECT DISTINCT
+	ts.ts_year,
+	ts.ts_quarter,
+	ts.dept_abbrev,
+	ts.course_no,
+	--ts.section_id,
+	ts.section_type_code,
+	mt.section_id,
+	mt.index1 AS 'meeting_no',
+	--ts.day_of_week,
+	mt.days_of_week,
+	mt.building,
+	mt.room_number,
+	--ts.starting_time,
+	mt.start_time,
+	--ts.ending_time,
+	mt.end_time,
+	ts.current_enroll,
+	ts.l_e_enroll,
+	ts.students_denied,
+	ts.students_added,
+	ts.students_dropped,
+	ci.fac_name,
+	ts.course_title,
+	ts.srs_comment
+
+FROM sec.time_schedule ts
+LEFT JOIN sec.sr_course_instr ci
+ON (
+	ci.fac_curric_abbr = ts.dept_abbrev
+	AND ci.fac_course_no = ts.course_no
+	AND ci.fac_yr = ts.ts_year
+	AND ci.fac_qtr = ts.ts_quarter
+	AND ci.fac_curric_abbr = ts.dept_abbrev
+	AND ci.fac_sect_id = ts.section_id
+)
+LEFT JOIN sec.time_sched_meeting_times mt
+ON (
+	mt.dept_abbrev = ts.dept_abbrev
+	AND mt.course_no = ts.course_no
+	AND mt.ts_year = ts.ts_year
+	AND mt.ts_quarter = ts.ts_quarter
+	AND mt.section_id = ts.section_id
+)
+		
+WHERE ts.ts_year BETWEEN (?) AND (?)
+AND ts.dept_abbrev = (?)
+AND ts.course_no = (?)
+AND ci.fac_pct_involve > 49
+
+ORDER BY ts.ts_year, ts.ts_quarter, mt.section_id
+;
+"""

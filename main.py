@@ -32,3 +32,35 @@ async def get_student_info_from_sid(request: Request, sid: str=None):
     else:
         return(templates.TemplateResponse("student_info.html", {"request":request}))
     
+
+@app.get("/course_history", response_class=HTMLResponse)
+async def get_course_history(
+        request: Request,
+        dept: str=None,
+        number: str=None,
+        start: str=None,
+        end: str=None
+    ):
+    # dept = dept_abbr
+    # number = crs_no
+    # start = start_yr
+    # end = end_yr
+
+    if dept and number and start and end:
+        sql = sql_scripts.course_history
+        print(sql)
+
+        course_info: dict = connect.get_course_info(sql,
+            (
+                int(start),
+                int(end),
+                dept,
+                int(number)
+            )
+        )
+        course_info['request']=request
+
+        return(templates.TemplateResponse("course_info.html", course_info))
+    else:
+        return(templates.TemplateResponse("course_info.html", {'request':request}))
+

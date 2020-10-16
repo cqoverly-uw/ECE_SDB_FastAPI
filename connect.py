@@ -1,3 +1,4 @@
+from fastapi import params
 import pyodbc
 import sys
 from pathlib import Path
@@ -97,6 +98,13 @@ def get_student_data(sql: str, sid: str)-> dict:
 
     return student_info
 
+
+def get_course_info(sql, course_paramters):
+    cursor = get_cursor()
+    cursor.execute(sql, course_paramters)
+    data = [s for s in cursor]
+
+    return {"course_data": data}
 
 if __name__ == '__main__':
     cur = get_cursor('UWSDBDataStore')

@@ -1,0 +1,35 @@
+<html>
+<head>
+    <title>Course Info</title>
+    <link href={{ url_for("static", path='/styles.css') }} rel='stylesheet'>
+</head>
+<body>
+    <div>
+        <form>
+            <label for="dept">Dept Abbr.</label>
+            <input type="text" id="dept" name="dept" value='E E'><br><br>
+            <label for="number">Course No.</label>
+            <input type="text" id="number" name="number" autofocus><br><br>
+            <label for="start">Start Year</label>
+            <input type="text" id="start" name="start" value=2016><br><br>
+            <label for="end">End Year</label>
+            <input type="text" id="end" name="end" value=2021><br>
+
+            <p><input type="submit"></p>
+        </form>
+    </div>
+    <div>
+    <h3>Course History</h3>
+    <table>
+    {% for row in course_data %}
+        <tr>
+        {% for data in row %}
+            <td> {{ data }} </td>
+        {% endfor %}
+        </tr>
+    {% endfor %}
+    </table>
+
+    </div>
+</body>
+</html>
