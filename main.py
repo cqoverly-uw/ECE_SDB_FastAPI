@@ -1,3 +1,8 @@
+import typing_extensions
+
+
+from typing import Optional
+
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -23,7 +28,7 @@ async def read_item(request: Request, id:str):
 
 
 @app.get("/student_info/", response_class=HTMLResponse)
-async def get_student_info_from_sid(request: Request, sid: str=None):
+async def get_student_info_from_sid(request: Request, sid: Optional[str]=None):
     if sid:
         sql = sql_scripts.info_from_sid
         student_info = connect.get_student_data(sql, sid)
@@ -36,10 +41,10 @@ async def get_student_info_from_sid(request: Request, sid: str=None):
 @app.get("/course_history", response_class=HTMLResponse)
 async def get_course_history(
         request: Request,
-        dept: str=None,
-        number: str=None,
-        start: str=None,
-        end: str=None
+        dept: Optional[str]=None,
+        number: Optional[str]=None,
+        start: Optional[str]=None,
+        end: Optional[str]=None
     ):
     # dept = dept_abbr
     # number = crs_no
@@ -48,7 +53,6 @@ async def get_course_history(
 
     if dept and number and start and end:
         sql = sql_scripts.course_history
-        print(sql)
 
         course_info: dict = connect.get_course_info(sql,
             (
