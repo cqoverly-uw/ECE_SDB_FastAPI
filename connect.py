@@ -36,7 +36,7 @@ def get_cursor():
         try:
             # print('No usable mssql driver. Attempting to connect via FreeTDS')
             # db = input('Enter database name: ')
-            conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=edwpub.s.uw.edu; PORT=1433;DATABASE='+database+';UID='+username+';PWD='+password+';')
+            conn = pyodbc.connect('DRIVER={FreeTDS};SERVER=edwpub.s.uw.edu; PORT=1433;DATABASE='+database+';UID='+username+';PWD='+password+';')
         except pyodbc.OperationalError:
             print("Not able to connect with provided methods")
             sys.exit()
