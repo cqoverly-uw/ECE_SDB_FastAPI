@@ -1,3 +1,5 @@
+import os
+
 from fastapi import params
 import pyodbc
 import sys
@@ -19,29 +21,25 @@ password = preferences.PWD
 
 def get_cursor():
 
-    try:
-        # print('Looking for usable DSN')
-        conn = pyodbc.connect('DSN=EDW')
-    except pyodbc.OperationalError:
+    if os.name != 'posix':
         try:
-            print('DSN unavailable. Trying to use mssql driver.')
-            conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=edwpub.s.uw.edu;DATABASE=UWSDBDataStore;UID='+username+';PWD='+password+';')
-        except pyodbc.InterfaceError:
-            try:
-                # print('No usable mssql driver. Attempting to connect via FreeTDS')
-                # db = input('Enter database name: ')
-                conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=edwpub.s.uw.edu; PORT=1433;DATABASE='+database+';UID='+username+';PWD='+password+';')
-            except pyodbc.OperationalError:
-                print("Not able to connect with provided methods")
-                sys.exit()
+            # print('Looking for usable DSN')
+            conn = pyodbc.connect('DSN=EDW')
         except pyodbc.OperationalError:
             try:
-                # print('No usable mssql driver. Attempting to connect via FreeTDS')
-                # db = input('Enter database name: ')
-                conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=edwpub.s.uw.edu; PORT=1433;DATABASE='+database+';UID='+username+';PWD='+password+';')
-            except pyodbc.OperationalError:
-                print("Not able to connect with provided methods")
-                sys.exit()
+                print('DSN unavailable. Trying to use mssql driver.')
+                conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=edwpub.s.uw.edu;DATABASE=UWSDBDataStore;UID='+username+';PWD='+password+';')
+            except:
+                print('UNABLE TO CONNECT')
+    else:
+        
+        try:
+            # print('No usable mssql driver. Attempting to connect via FreeTDS')
+            # db = input('Enter database name: ')
+            conn = pyodbc.connect('DRIVER=FreeTDS;SERVER=edwpub.s.uw.edu; PORT=1433;DATABASE='+database+';UID='+username+';PWD='+password+';')
+        except pyodbc.OperationalError:
+            print("Not able to connect with provided methods")
+            sys.exit()
         # finally:
         #     conn.close()
 
