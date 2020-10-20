@@ -28,8 +28,17 @@ async def read_item(request: Request, id:str):
 
 @app.get("/student_info/", response_class=HTMLResponse)
 async def get_student_info_from_sid(request: Request, sid: Optional[str]=None):
+    sql: str = None
     if sid:
-        sql = sql_scripts.info_from_sid
+        if '@' not in sid:
+            print('Student Number Search')
+            sql = sql_scripts.info_from_sid
+        elif '@uw.edu' in sid:
+            print('UW Email Search')
+            sql = sql_scripts.student_from_uw_email
+        else:
+            print("Other Search")
+            sql = sql_scripts.student_from_alt_email
         student_info = connect.get_student_data(sql, sid)
         student_info["request"] = request
         return(templates.TemplateResponse("student_info.html", student_info))
