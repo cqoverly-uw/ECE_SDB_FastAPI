@@ -18,7 +18,6 @@ username = preferences.USERNAME
 password = preferences.PWD
 
 
-
 def get_cursor():
 
     if os.name != 'posix':
@@ -45,13 +44,6 @@ def get_cursor():
 
     # print('Connection to database successful')
     return conn.cursor()
-
-
-def run_query(sql):
-    cursor = get_cursor()
-    cursor.execute(sql, sid)
-    data = [s for s in cursor]
-    return data
             
 
 def get_student_data(sql: str, sid: str)-> dict:
