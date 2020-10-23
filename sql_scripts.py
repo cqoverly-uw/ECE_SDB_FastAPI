@@ -190,3 +190,53 @@ ON s1.system_key = di.system_key
 WHERE a.e_mail_other = (?)
 ;
 '''
+
+fac_crs_history_query = '''
+SELECT DISTINCT
+	ts.ts_year yr,
+	ts.ts_quarter qtr,
+	ts.dept_abbrev dept,
+	ts.course_no,
+	ts.section_type_code sect_type,
+	mt.section_id sect,
+	mt.index1 AS 'meeting_no',
+	mt.days_of_week days,
+	mt.building bldg,
+	mt.room_number room_no,
+	mt.start_time start_t,
+	mt.end_time end_t,
+	ts.current_enroll curr_enr,
+	ts.l_e_enroll limit,
+	ts.students_denied denied,
+	ts.students_added added,
+	ts.students_dropped dropped,
+	ci.fac_name,
+	ts.course_title title,
+	ts.srs_comment
+
+FROM sec.time_schedule ts
+LEFT JOIN sec.sr_course_instr ci
+ON (
+	ci.fac_curric_abbr = ts.dept_abbrev
+	AND ci.fac_course_no = ts.course_no
+	AND ci.fac_yr = ts.ts_year
+	AND ci.fac_qtr = ts.ts_quarter
+	AND ci.fac_curric_abbr = ts.dept_abbrev
+	AND ci.fac_sect_id = ts.section_id
+)
+LEFT JOIN sec.time_sched_meeting_times mt
+ON (
+	mt.dept_abbrev = ts.dept_abbrev
+	AND mt.course_no = ts.course_no
+	AND mt.ts_year = ts.ts_year
+	AND mt.ts_quarter = ts.ts_quarter
+	AND mt.section_id = ts.section_id
+)
+		
+WHERE ts.ts_year BETWEEN (?) AND (?)
+AND ci.fac_name LIKE (?)
+AND LEN(mt.section_id) = 1
+
+ORDER BY ts.ts_year, ts.ts_quarter, ts.dept_abbrev, ts.course_no
+;
+'''

@@ -89,12 +89,21 @@ def get_student_data(sql: str, sid: str)-> dict:
     return student_info
 
 
-def get_course_info(sql, course_paramters):
+def get_course_info(sql: str, search_parameters: tuple) -> dict:
     cursor = get_cursor()
-    cursor.execute(sql, course_paramters)
+    cursor.execute(sql, search_parameters)
     data = [s for s in cursor]
 
     return {"course_data": data}
+
+
+def get_fac_crs_info(sql: str, search_parameters: tuple) -> dict:
+    cursor = get_cursor()
+    cursor.execute(sql, search_parameters)
+    data = [s for s in cursor]
+
+    return {"fac_crs_history_data": data}
+
 
 if __name__ == '__main__':
     cur = get_cursor('UWSDBDataStore')

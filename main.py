@@ -6,6 +6,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from starlette.routing import request_response
 
 import sql_scripts
 import connect
@@ -62,11 +63,11 @@ async def get_course_history(
         sql = sql_scripts.course_history
 
         course_info: dict = connect.get_course_info(sql,
-            (
-                int(start),
-                int(end),
-                dept,
-                int(number)
+                (
+                    int(start),
+                    int(end),
+                    dept,
+                    int(number)
             )
         )
         course_info['request']=request
@@ -74,4 +75,31 @@ async def get_course_history(
         return(templates.TemplateResponse("course_info.html", course_info))
     else:
         return(templates.TemplateResponse("course_info.html", {'request':request}))
+
+
+@app.get("/fac_crs_history/", response_class=HTMLResponse)
+async def get_fac_crs_history(
+        request:Request,
+        fac_name: Optional[str]=None,
+        start_yr: Optional[str]=None,
+        end_yr: Optional[str]=None,
+        ):
+    
+    if fac_name and start_yr and end_yr:
+        print('SHOULD BE RUNNING QUERY')
+        sql = sql_scripts.fac_crs_history_query
+        fac_name += '%'
+        fac_crs_history_data = connect.get_fac_crs_info(sql, 
+                (
+                    int(start_yr),
+                    int(end_yr),
+                    fac_name
+            )
+        )
+        fac_crs_history_data['request'] = request
+        return(templates.TemplateResponse("faculty_crs_history.html", fac_crs_history_data))
+
+    else:
+        return(templates.TemplateResponse("faculty_crs_history.html", {'request':request}))
+
 
