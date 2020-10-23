@@ -240,3 +240,25 @@ AND LEN(mt.section_id) = 1
 ORDER BY ts.ts_year, ts.ts_quarter, ts.dept_abbrev, ts.course_no
 ;
 '''
+
+faculty_code_query = '''
+SELECT DISTINCT
+	ci.fac_ssn,
+	ci.fac_name,
+	ci.fac_yr,
+	ci.fac_qtr,
+	ci.fac_seq_no
+
+
+FROM sec.sr_course_instr ci
+INNER JOIN sec.sr_instructor i
+ON ci.fac_ssn = i.instr_ssn
+
+
+WHERE ci.fac_name LIKE (?)
+AND ci.fac_yr = (?)
+AND ci.fac_qtr = (?)
+AND ci.fac_curric_abbr = 'E E'
+AND ci.fac_seq_no > 9999
+;
+'''

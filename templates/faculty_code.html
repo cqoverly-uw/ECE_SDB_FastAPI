@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title>Faculty Code Finder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-fluid">
+        <div>
+            <p><a href="/">Menu</a></p>
+        </div>
+        <div>
+            <form>
+                <label for="fac_name">Last Name,First Initial</label>
+                <input type="text" id="fac_name" name="fac_name" autofocus>
+                <lable for="code_yr">Code Year</label>
+                <input type="text" id="code_yr" name="code_yr" autofocus>
+                <lable for="code_qtr">Code Quarter</label>
+                <input type="text" id="code_qtr" name="code_qtr" autofocus>
+                <p><input type="submit"></p>
+            </form>
+        </div>
+        <div>
+            {% if fac_name %}
+            <h3>{{ fac_name }}</h3>
+            <ul>
+                <li>EID: {{ fac_eid }}</li>
+                <li>Faculty Code: {{ fac_code }}</li>
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

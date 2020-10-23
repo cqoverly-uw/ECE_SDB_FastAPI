@@ -83,7 +83,7 @@ async def get_fac_crs_history(
         fac_name: Optional[str]=None,
         start_yr: Optional[str]=None,
         end_yr: Optional[str]=None,
-        ):
+    ):
     
     if fac_name and start_yr and end_yr:
         print('SHOULD BE RUNNING QUERY')
@@ -103,3 +103,26 @@ async def get_fac_crs_history(
         return(templates.TemplateResponse("faculty_crs_history.html", {'request':request}))
 
 
+@app.get("/facutly_code/", response_class=HTMLResponse)
+async def get_faculty_code(
+        request: Request,
+        fac_name: Optional[str]=None,
+        code_yr: Optional[str]=None,
+        code_qtr: Optional[str]=None
+    ):
+    
+    if fac_name and code_yr and code_qtr:
+        sql = sql_scripts.faculty_code_query
+        fac_name += '%'
+        fac_code_info = connect.get_faculty_code(sql,
+                (
+                        fac_name,
+                        int(code_yr),
+                        int(code_qtr)
+            )
+        )
+        fac_code_info['request'] = request
+        return(templates.TemplateResponse("faculty_code.html", fac_code_info))
+
+    else:
+        return(templates.TemplateResponse("faculty_code.html", {'request': request}))
