@@ -269,7 +269,7 @@ DECLARE @CURRENT_YEAR SMALLINT;
 SET @CURRENT_YEAR = (
 	SELECT sdb1.current_yr
 	FROM sec.sdbdb01 sdb1
-)
+);
 
 SELECT DISTINCT 
 	ci.fac_ssn,
