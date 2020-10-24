@@ -126,3 +126,14 @@ async def get_faculty_code(
 
     else:
         return(templates.TemplateResponse("faculty_code.html", {'request': request}))
+
+
+@app.get("/faculty_list/", response_class=HTMLResponse)
+async def get_faculty_list(request: Request):
+    sql = sql_scripts.faculty_list_query
+    data = connect.get_faculty_list(sql)
+    faculty_list_info = {
+        'request': request,
+        'instructor_list': data
+    }
+    return(templates.TemplateResponse("faculty_list.html", faculty_list_info))

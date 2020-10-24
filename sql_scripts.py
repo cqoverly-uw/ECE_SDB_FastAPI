@@ -262,3 +262,44 @@ AND ci.fac_curric_abbr = 'E E'
 AND ci.fac_seq_no > 9999
 ;
 '''
+
+
+faculty_list_query = '''
+DECLARE @CURRENT_YEAR SMALLINT;
+SET @CURRENT_YEAR = (
+	SELECT sdb1.current_yr
+	FROM sec.sdbdb01 sdb1
+)
+
+SELECT DISTINCT 
+	ci.fac_ssn,
+	(
+		SELECT TOP 1 inst.instr_name
+		FROM sec.sr_instructor inst
+		WHERE inst.instr_ssn = ci.fac_ssn
+		AND RTRIM(instr_name) <> ''
+		ORDER BY inst.instr_updt_dt DESC
+) inst_name,
+	
+	(
+		SELECT TOP 1 inst.instr_netid
+		FROM sec.sr_instructor inst
+		WHERE inst.instr_ssn = ci.fac_ssn
+		AND RTRIM(inst.instr_netid) <> ''
+		ORDER BY inst.instr_updt_dt DESC
+) netid
+
+
+FROM sec.sr_course_instr ci
+INNER JOIN sec.sr_instructor i
+ON ci.fac_ssn = i.instr_ssn
+
+WHERE ci.fac_yr > @CURRENT_YEAR - 2
+AND ci.fac_pct_involve > 49
+AND ci.fac_curric_abbr IN ('E E', 'EE P')
+AND RTRIM(ci.fac_name) <> ''
+ORDER BY inst_name
+
+;
+
+'''

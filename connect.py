@@ -1,4 +1,5 @@
 import os
+from typing import List
 
 from fastapi import params
 import pyodbc
@@ -117,6 +118,13 @@ def get_faculty_code(sql: str, search_parameters: tuple) -> dict:
         'fac_code': data[4]
     }
     return fac_code_data
+
+
+def get_faculty_list(sql: str) -> List[tuple]:
+    cursor = get_cursor()
+    cursor.execute(sql)
+    instructor_list_info = [i for i in cursor]
+    return instructor_list_info
 
 
 if __name__ == '__main__':
