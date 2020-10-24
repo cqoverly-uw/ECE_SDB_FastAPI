@@ -10,21 +10,25 @@
         </div>
         <div>
             <h3>Joint Course Info</h3>
-            <table class="table">
-                <tr>
-                    <th>Dept.</th>
-                    <th>Course #</th>
-                    <th>Joint Dept.</th>
-                    <th>Joint Course #</th>
-                    <th>Resp. Dept.</th>
-                </tr>
-            {% for row in joint_courses_data %}
-                <tr>
-                {% for data in row %}
-                    <td> {{ data }} </td>
+            <table class="table w-auto">
+                <thead>
+                    <tr>
+                        <th>Dept.</th>
+                        <th>Course #</th>
+                        <th>Joint Dept.</th>
+                        <th>Joint Course #</th>
+                        <th>Resp. Dept.</th>
+                    </tr>
+                <thead>
+                <tbody>    
+                {% for row in joint_courses_data %}
+                    <tr>
+                    {% for data in row %}
+                        <td> {{ data }} </td>
+                    {% endfor %}
+                    </tr>
                 {% endfor %}
-                </tr>
-            {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>
