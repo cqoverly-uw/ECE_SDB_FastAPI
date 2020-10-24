@@ -306,7 +306,7 @@ ORDER BY inst_name
 
 
 joint_courses_query = '''
-SELECT 
+SELECT DISTINCT
 	jc.department_abbrev,
 	jc.course_number,
 	jc.joint_dept_abbrev,
@@ -318,10 +318,11 @@ INNER JOIN sec.sr_course_titles ct
 ON (
 		(jc.department_abbrev = ct.department_abbrev) 
 		AND (jc.course_number = ct.course_number)
+        AND (jc.last_eff_yr = ct.last_eff_yr)
 )
 
 WHERE jc.department_abbrev = 'E E'
-AND ct.last_eff_yr = 9999
+AND jc.last_eff_yr = 9999
 
 ORDER BY jc.course_number, jc.joint_dept_abbrev
 ;

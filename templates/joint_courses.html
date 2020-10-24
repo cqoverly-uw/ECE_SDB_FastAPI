@@ -20,12 +20,8 @@
                 </tr>
             {% for row in joint_courses_data %}
                 <tr>
-                {% for dept, crs_no, joint_dept, joint_crs_no, resp_dept in row %}
-                    <td> {{ dept }} </td>
-                    <td> {{ crs_no }} </td>
-                    <td> {{ joint_dept }} </td>
-                    <td> {{ joint_crs_no }} </td>
-                    <td> {{ resp_dept }} </td>
+                {% for data in row %}
+                    <td> {{ data }} </td>
                 {% endfor %}
                 </tr>
             {% endfor %}

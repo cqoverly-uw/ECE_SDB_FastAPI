@@ -145,7 +145,7 @@ async def get_joint_course_list(request: Request):
     data: List[tuple] = connect.get_joint_course_data(sql)
     joint_courses_info = {
         'request': request,
-        'joint_courses_data': []
+        'joint_courses_data': data
     }
 
     return(templates.TemplateResponse("joint_courses.html", joint_courses_info))
