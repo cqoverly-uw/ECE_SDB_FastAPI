@@ -1,6 +1,6 @@
 import typing
 
-from typing import Optional
+from typing import Optional, List
 
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
@@ -131,9 +131,21 @@ async def get_faculty_code(
 @app.get("/faculty_list/", response_class=HTMLResponse)
 async def get_faculty_list(request: Request):
     sql = sql_scripts.faculty_list_query
-    data = connect.get_faculty_list(sql)
+    data: List[tuple] = connect.get_faculty_list(sql)
     faculty_list_info = {
         'request': request,
         'instructor_list': data
     }
     return(templates.TemplateResponse("faculty_list.html", faculty_list_info))
+
+
+@app.get("/joint_courses.html/", response_class=HTMLResponse)
+async def get_joint_course_list(request: Request):
+    sql: str = sql_scripts.joint_courses_query
+    data: List[tuple] = connect.get_joint_course_data(sql)
+    joint_courses_info = {
+        'request': request,
+        'joint_courses_data': []
+    }
+
+    return(templates.TemplateResponse("joint_courses.html", joint_courses_info))

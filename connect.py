@@ -127,6 +127,14 @@ def get_faculty_list(sql: str) -> List[tuple]:
     return instructor_list_info
 
 
+def get_joint_course_data(sql: str) -> List[tuple]:
+    cursor = get_cursor()
+    cursor.execute(sql)
+    joint_course_data = [c for c in cursor]
+    print(joint_course_data)
+    return joint_course_data
+
+
 if __name__ == '__main__':
     cur = get_cursor('UWSDBDataStore')
     cur.execute("SELECT 'YES'")

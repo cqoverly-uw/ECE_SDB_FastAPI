@@ -303,3 +303,26 @@ ORDER BY inst_name
 ;
 
 '''
+
+
+joint_courses_query = '''
+SELECT 
+	jc.department_abbrev,
+	jc.course_number,
+	jc.joint_dept_abbrev,
+	jc.joint_course_num,
+	ct.resp_curric_abbr
+
+FROM sec.sr_course_titles_joint_course jc
+INNER JOIN sec.sr_course_titles ct
+ON (
+		(jc.department_abbrev = ct.department_abbrev) 
+		AND (jc.course_number = ct.course_number)
+)
+
+WHERE jc.department_abbrev = 'E E'
+AND ct.last_eff_yr = 9999
+
+ORDER BY jc.course_number, jc.joint_dept_abbrev
+;
+'''
