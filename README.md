@@ -2,7 +2,7 @@
  
 ECE_SDB_FastAPI is, as the name suggests, a set of scripts, mainly for program coordinators working with advising or the time schedule, that interfaces with the UW's EDW, mainly using the UWSDBDataStore database. 
 
-###**List of current working elements**:
+### **List of current working elements**:
 
 **Find basic student information** based on student number, student's UW email, or student's stored alternate email. (Note, the alternate email is ofteninvalid as it was entered at the student applied to the university.)
 
