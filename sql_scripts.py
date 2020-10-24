@@ -265,11 +265,7 @@ AND ci.fac_seq_no > 9999
 
 
 faculty_list_query = '''
-DECLARE @CURRENT_YEAR SMALLINT;
-SET @CURRENT_YEAR = (
-	SELECT sdb1.current_yr
-	FROM sec.sdbdb01 sdb1
-);
+
 
 SELECT DISTINCT 
 	ci.fac_ssn,
@@ -294,7 +290,7 @@ FROM sec.sr_course_instr ci
 INNER JOIN sec.sr_instructor i
 ON ci.fac_ssn = i.instr_ssn
 
-WHERE ci.fac_yr > @CURRENT_YEAR - 2
+WHERE ci.fac_yr > (?) - 2
 AND ci.fac_pct_involve > 49
 AND ci.fac_curric_abbr IN ('E E', 'EE P')
 AND RTRIM(ci.fac_name) <> ''

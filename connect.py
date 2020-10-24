@@ -120,9 +120,9 @@ def get_faculty_code(sql: str, search_parameters: tuple) -> dict:
     return fac_code_data
 
 
-def get_faculty_list(sql: str) -> List[tuple]:
+def get_faculty_list(sql: str, year: int) -> List[tuple]:
     cursor = get_cursor()
-    cursor.execute(sql)
+    cursor.execute(sql, year)
     instructor_list_info = [i for i in cursor]
     return instructor_list_info
 

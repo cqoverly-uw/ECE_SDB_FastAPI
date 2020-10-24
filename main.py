@@ -1,4 +1,5 @@
 import typing
+from datetime import datetime
 
 from typing import Optional, List
 
@@ -130,8 +131,9 @@ async def get_faculty_code(
 
 @app.get("/faculty_list/", response_class=HTMLResponse)
 async def get_faculty_list(request: Request):
-    sql = sql_scripts.faculty_list_query
-    data: List[tuple] = connect.get_faculty_list(sql)
+    year: int = datetime.now().date().year
+    sql: str = sql_scripts.faculty_list_query
+    data: List[tuple] = connect.get_faculty_list(sql, year)
     faculty_list_info = {
         'request': request,
         'instructor_list': data
