@@ -323,3 +323,49 @@ AND jc.last_eff_yr = 9999
 ORDER BY jc.course_number, jc.joint_dept_abbrev
 ;
 '''
+
+
+current_ee_undergrads_query = '''
+SELECT DISTINCT
+	s1.student_no,
+	s1.student_name_lowc,
+	s1.student_name_pn_f,
+	a.e_mail_ucs uw_email,
+	s1.spp_qtrs_used,
+	CASE cm.pathway
+		WHEN 0 THEN CONCAT('00','-',cm.deg_level,cm.deg_type)
+		ELSE CONCAT(cm.pathway,'-',cm.deg_level,cm.deg_type)
+	END degree,
+	CASE s1.tot_graded_attmp
+		WHEN 0 THEN 0.0
+		ELSE CONVERT(DECIMAL(4,2), (s1.tot_grade_points/s1.tot_graded_attmp))
+	END cum_gpa
+
+
+
+FROM sec.student_1 s1
+INNER JOIN sec.student_1_college_major cm
+ON s1.system_key = cm.system_key
+INNER JOIN sec.registration_courses rc
+ON s1.system_key = rc.system_key
+INNER JOIN sec.addresses a
+ON s1.system_key = a.system_key
+
+
+WHERE cm.deg_level = 1 
+AND rc.regis_yr = (
+	SELECT TOP 1 sdb1.current_yr
+	FROM sec.sdbdb01 sdb1
+)
+
+AND rc.regis_qtr = (
+	SELECT TOP 1 sdb1.current_qtr
+	FROM sec.sdbdb01 sdb1
+)
+AND cm.major_abbr = 'E E'
+AND rc.request_status IN ('A' ,'C', 'R')
+AND cm.branch = 0
+
+ORDER BY s1.student_name_lowc
+;
+'''
