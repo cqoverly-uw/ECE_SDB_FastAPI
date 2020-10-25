@@ -16,16 +16,16 @@
                         <th>Dept.</th>
                         <th>Course #</th>
                         <th>Joint Dept.</th>
-                        <th>Joint Course #</th>
                         <th>Resp. Dept.</th>
                     </tr>
                 <thead>
                 <tbody>    
-                {% for row in joint_courses_data %}
+                {% for course, values in joint_courses_data.items() %}
                     <tr>
-                    {% for data in row %}
-                        <td> {{ data }} </td>
-                    {% endfor %}
+                        <td> {{ values.dept }} </td>
+                        <td> {{ course }} </td>
+                        <td> {{ values.joint_courses }} </td>
+                        <td> {{ values.resp_dept }} </td>
                     </tr>
                 {% endfor %}
                 </tbody>

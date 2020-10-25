@@ -144,7 +144,7 @@ async def get_faculty_list(request: Request):
 @app.get("/joint_courses.html/", response_class=HTMLResponse)
 async def get_joint_course_list(request: Request):
     sql: str = sql_scripts.joint_courses_query
-    data: List[tuple] = connect.get_joint_course_data(sql)
+    data: dict = connect.get_joint_course_data(sql)
     joint_courses_info = {
         'request': request,
         'joint_courses_data': data
