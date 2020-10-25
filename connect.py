@@ -147,6 +147,14 @@ def get_joint_course_data(sql: str) -> dict:
     return course_joins_info
 
 
+def get_current_ee_undergrads_data(sql: str) -> List[tuple]:
+    cursor = get_cursor()
+    cursor.execute(sql)
+    student_data = [s for s in cursor]
+
+    return student_data
+
+
 if __name__ == '__main__':
     cur = get_cursor('UWSDBDataStore')
     cur.execute("SELECT 'YES'")
