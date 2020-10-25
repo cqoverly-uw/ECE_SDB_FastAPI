@@ -10,12 +10,11 @@
         </div>
         <div>
             <h3>Instructor List</h3>
-            <p></p>
             <ul>
             {% for eid, instructor, netid in instructor_list%}
                 <li>{{ instructor }} - {{ eid }} - {{ netid }}</li>
-            </ul>
             {% endfor %}
+            </ul>
         </div>
     </div>
 </body>
