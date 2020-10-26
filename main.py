@@ -32,13 +32,10 @@ async def get_student_info_from_sid(request: Request, sid: Optional[str]=None):
     sql: str = None
     if sid:
         if '@' not in sid:
-            print('Student Number Search')
             sql = sql_scripts.info_from_sid
         elif '@uw.edu' in sid:
-            print('UW Email Search')
             sql = sql_scripts.student_from_uw_email
         else:
-            print("Other Search")
             sql = sql_scripts.student_from_alt_email
         student_info = connect.get_student_data(sql, sid)
         student_info["request"] = request
@@ -157,7 +154,6 @@ async def get_joint_course_list(request: Request):
 async def get_current_ee_undergrads(request: Request):
     sql: str = sql_scripts.current_ee_undergrads_query
     data: List[tuple] = connect.get_current_ee_undergrads_data(sql)
-    print(data)
     undergrad_info = {
         'request': request,
         'student_list': data
