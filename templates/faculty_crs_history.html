@@ -21,7 +21,8 @@
         </div>
         <div>
             <h3>Course History</h3>
-            <table class="table">
+            <table class="table table-sm table-bordered">
+            <thead class="thead-light">
                 <tr>
                     <th>Year</th>
                     <th>Qtr</th>
@@ -44,6 +45,8 @@
                     <th>Title</th>
                     <th>Comment</th>
                 </tr>
+            </thead>
+            <tbody>
             {% for row in fac_crs_history_data %}
                 <tr>
                 {% for data in row %}
@@ -51,6 +54,7 @@
                 {% endfor %}
                 </tr>
             {% endfor %}
+            </tbody>
             </table>
         </div>
     </div>
