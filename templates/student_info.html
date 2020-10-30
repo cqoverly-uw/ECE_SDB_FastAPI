@@ -5,30 +5,43 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div>
-            <form>
+        
+        <div class="row">
+            <div class="col">
+                <div>
+                    <form>
+                        <p></p>
+                        <label for="sid"><h6>Student No. or Either Email</h6></label><br>
+                        <input type="text" id="sid" name="sid" autofocus>
+                        <input type="submit">
+                    </form>
+                </div>
+                <div>
+                <h3>{{ sid }} - {{ name }}</h3>
+                <ul>
+                    <li>Qtrs Used: {{ qtrs_used }}</li>
+                    <li>UW Email: <a href="#">{{ uw_email }}</a></li>
+                    <li>Alt. Email: <a href="#">{{ other_email }}</a></li>
+                    <li>Campus: {{ campus }}</li>
+                    <li>Major Dept.: {{ major }}</li>
+                    <li>Degree: {{ degree }}</li>
+                    <li>Cum GPA: {{ cum_gpa }}</li>
+                    <li>Degree Status: {{ degree_status }}</li>
+                    <li>Degree Earned: {{ degree_earnrd }}</li>
+                </ul>
+                </div>
+            </div>
+            <div class="col">
                 <p></p>
-                <label for="sid"><h6>Student No. or Either Email</h6></label><br>
-                <input type="text" id="sid" name="sid" autofocus>
-                <input type="submit">
-            </form>
+                <h4>Other Information</h4>
+            </div>
+            <div class="col">
+                <p></p>
+                <h4>More Information</h4>
+            </div>
         </div>
-        <div>
-        <h3>{{ sid }} - {{ name }}</h3>
-        <ul>
-            <li>Qtrs Used: {{ qtrs_used }}</li>
-            <li>UW Email: <a href="#">{{ uw_email }}</a></li>
-            <li>Alt. Email: <a href="#">{{ other_email }}</a></li>
-            <li>Campus: {{ campus }}</li>
-            <li>Major Dept.: {{ major }}</li>
-            <li>Degree {{ degree }}</li>
-            <li>Degree Status: {{ degree_status }}</li>
-            <li>Degree Earned: {{ degree_earnrd }}</li>
-        </ul>
-        <p></p>
-        <p></p>
         <p><a href="/">Home</a></p>
-        </div>
+        
     </div>
 </body>
 </html>

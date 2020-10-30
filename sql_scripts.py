@@ -20,6 +20,10 @@ SELECT
 	cm.deg_level,
 	cm.deg_type,
 	CASE 
+		WHEN s1.tot_graded_attmp = 0 THEN 0
+		ELSE CAST(s1.tot_grade_points/s1.tot_graded_attmp AS DECIMAL(4,2))
+	END cum_gpa,
+	CASE 
 		WHEN di.deg_status BETWEEN 3 AND 5 THEN 'APPLIED'
 		WHEN di.deg_status = 1 THEN 'WITHDRAWN'
 		WHEN di.deg_status = 9 THEN 'GRANTED'
