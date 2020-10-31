@@ -66,10 +66,10 @@ def get_student_data(sql: str, sid: str)-> dict:
     deg_pathway = data[8]
     deg_level = data[9]
     deg_type = data[10]
-    cum_gpa = data[11]
-    deg_status = data[12]
-    deg_earned_yr = data[13]
-    deg_earned_qtr = data[14]
+    # cum_gpa = data[11]
+    deg_status = data[11]
+    deg_earned_yr = data[12]
+    deg_earned_qtr = data[13]
 
     if pref_first_name:
         first_name = pref_first_name
@@ -84,7 +84,6 @@ def get_student_data(sql: str, sid: str)-> dict:
             "campus": campus,
             "major": major_abbr,
             "degree": f'{deg_pathway}-{deg_level}{deg_type}',
-            "cum_gpa": cum_gpa,
             "degree_status": deg_status,
             "degree_earned": f'{deg_earned_qtr}-{deg_earned_yr}'
     }
