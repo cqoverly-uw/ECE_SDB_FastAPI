@@ -70,9 +70,9 @@ async def get_course_history(
         )
         course_info['request']=request
 
-        return(templates.TemplateResponse("course_info.html", course_info))
+        return(templates.TemplateResponse("course_history.html", course_info))
     else:
-        return(templates.TemplateResponse("course_info.html", {'request':request}))
+        return(templates.TemplateResponse("course_history.html", {'request':request}))
 
 
 @app.get("/fac_crs_history/", response_class=HTMLResponse)
