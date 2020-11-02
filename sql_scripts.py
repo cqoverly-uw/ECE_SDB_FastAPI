@@ -332,6 +332,7 @@ single_course_joins_info = '''
 	)
 
 	WHERE jc.department_abbrev = 'E E'
+	AND jc.course_number = (?)
 	AND ct.last_eff_yr = 9999
 
 	ORDER BY jc.course_number, jc.joint_dept_abbrev
@@ -369,8 +370,8 @@ single_course_info = '''
 	FROM sec.sr_course_titles ct
 
 	WHERE ct.last_eff_yr = 9999
-	AND ct.department_abbrev = @DEPT
-	AND ct.course_number = @CRS_NO
+	AND ct.department_abbrev = (?)
+	AND ct.course_number = (?)
 	AND ct.course_branch = 0
 	;
 '''
