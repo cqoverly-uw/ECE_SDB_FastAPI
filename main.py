@@ -1,9 +1,8 @@
 import typing
+from typing import Optional, List
 from datetime import datetime
 
-from typing import Optional, List
-
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Query 
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -29,9 +28,9 @@ async def index(request: Request):
 async def read_item(request: Request, id:str):
     return(templates.TemplateResponse("item.html", {"request": request, "id": id}))
 
-
+##### HTTP calls for information regarding students ####
 @app.get("/student_info/", response_class=HTMLResponse)
-async def get_student_info_from_sid(request: Request, sid: Optional[str]=None):
+async def get_student_info_from_sid(request: Request, sid: Optional[str]=Query(None, max_length=7)):
     sql: str = None
     if sid:
         if '@' not in sid:
@@ -59,6 +58,7 @@ async def get_current_ee_undergrads(request: Request):
     return(templates.TemplateResponse("current_ee_undergrads.html", undergrad_info))
 
 
+##### HTTP calls for information regarding courses ####
 @app.get("/course_history", response_class=HTMLResponse)
 async def get_course_history(
         request: Request,
@@ -102,6 +102,7 @@ async def get_joint_course_list(request: Request):
     return(templates.TemplateResponse("joint_courses.html", joint_courses_info))
 
 
+##### HTTP calls for information regarding facutly ####
 @app.get("/fac_crs_history/", response_class=HTMLResponse)
 async def get_fac_crs_history(
         request:Request,
