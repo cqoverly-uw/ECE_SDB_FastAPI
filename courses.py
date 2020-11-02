@@ -21,9 +21,16 @@ def get_joint_course_data(sql: str) -> dict:
     return course_joins_info
 
 
-def get_course_info(sql: str, search_parameters: tuple) -> dict:
+def get_course_history(sql: str, search_parameters: tuple) -> dict:
     cursor = get_cursor()
     cursor.execute(sql, search_parameters)
     data = [s for s in cursor]
 
     return {"course_data": data}
+
+
+def get_single_course_info(sql: str, params: tuple) -> dict:
+    cursor = get_cursor()
+    cursor.execute(sql, params)
+    base_info = [info for info in cursor][0]
+    pass

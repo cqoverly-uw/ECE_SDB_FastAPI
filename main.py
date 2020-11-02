@@ -9,7 +9,6 @@ from fastapi.templating import Jinja2Templates
 from starlette.routing import request_response
 
 import sql_scripts
-import connect
 import students
 import courses
 import faculty
@@ -59,7 +58,28 @@ async def get_current_ee_undergrads(request: Request):
 
 
 ##### HTTP calls for information regarding courses ####
-@app.get("/course_history", response_class=HTMLResponse)
+
+@app.get("/course_info/", response_class=HTMLResponse)
+async def get_course_info(
+        request: Request,
+        dept: Optional[str]=Query(None, max_length=6),
+        crs_number: Optional[int]=Query(None)):
+    sql_base_info = sql_scripts.single_course_info
+    sql_joins = sql_scripts.single_course_joins_info
+    if dept and crs_number: 
+        course_base_info: dict = courses.get_course_info(sql, (dept, crs_number))
+        joined_courses: list = courses.get_joint
+        full_course_info = {
+            'request': request,
+            'joined_courses': joined_courses,
+            **course_base_info
+        }
+        return(templates.TemplateResponse("course_info.html", full_course_info)) 
+    else:
+        return(templates.TemplateResponse("course_info.html", {'request': request}))
+
+
+@app.get("/course_history/", response_class=HTMLResponse)
 async def get_course_history(
         request: Request,
         dept: Optional[str]=None,
@@ -75,7 +95,7 @@ async def get_course_history(
     if dept and number and start and end:
         sql = sql_scripts.course_history
 
-        course_info: dict = courses.get_course_info(sql,
+        course_history: dict = courses.get_course_history(sql,
                 (
                     int(start),
                     int(end),
@@ -83,9 +103,9 @@ async def get_course_history(
                     int(number)
             )
         )
-        course_info['request']=request
+        course_history['request']=request
 
-        return(templates.TemplateResponse("course_history.html", course_info))
+        return(templates.TemplateResponse("course_history.html", course_history))
     else:
         return(templates.TemplateResponse("course_history.html", {'request':request}))
 
