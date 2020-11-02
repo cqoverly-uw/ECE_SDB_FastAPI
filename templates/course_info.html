@@ -10,7 +10,7 @@
                         <label for="dept"><h6>Curriculum Abbrev: </h6></label><br>
                         <input type="text" id="dept" name="dept" value='E E'><br><br>
                         <label for="crs_number"><h6>Course No.: </h6></label><br>
-                        <input type="text" id="crs_number" name="crs_number" vaulue={{ crs_number }}autofocus><br><br>
+                        <input type="text" id="crs_number" name="crs_number" value={{ crs_number }} autofocus><br><br>
                         <p><input type="submit"></p>
                     </form>
                 </div>
@@ -23,10 +23,21 @@
         <div class="row">   
             <div class="col">
                 <div>
-                <h3>{{ dept }} - {{ crs_number }}</h3>
+                <h3>{{ dept }} {{ crs_number }}</h3>
+                <h5> {{ long_title }}</h5>
                 <ul>
-                    <li>Dept.: {{ dept }}</li>
-                    <li>Number: {{ crs_number }}</li>
+                    <li>Course Joins: {{ joined_courses }}</li>
+                    <li>Min. Credits: {{ min_credits }}</li>
+                    <li>Max. Credits: {{ max_credit }}</li>
+                    <li>Credit Ctrl.: {{ credit_ctrl }}</li>
+                    <li>Grade Sys.: {{ grade_sys }}</li>
+                    <li>Short Title: {{ short_title }}</li>
+                    <li>Resp. Course: {{ resp_crs }}</li>
+                    <li>Div. Credit: {{ diversity }}</li>
+                    <li>I & S: {{ i_and_s }}</li>
+                    <li>Vis. Lit.: {{ vis_lit_perf_arts }}</li>
+                    <li>Eng. Comp: {{ enl_comp }}</li>
+                    <li>Writing: {{ writing }}</li>
                 </ul>
                 </div>
             </div>

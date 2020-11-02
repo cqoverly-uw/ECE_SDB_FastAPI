@@ -32,5 +32,27 @@ def get_course_history(sql: str, search_parameters: tuple) -> dict:
 def get_single_course_info(sql: str, params: tuple) -> dict:
     cursor = get_cursor()
     cursor.execute(sql, params)
-    base_info = [info for info in cursor][0]
-    pass
+    data = [info for info in cursor][0]
+    base_info = {
+        'dept': data[0],
+        'crs_number': data[1],
+        'min_credits': data[2],
+        'max_credits': data[3],
+        'credit_ctrl': data[4],
+        'grade_sys': data[5],
+        'short_title': data[6],
+        'long_title': data[7],
+        'resp_crs': data[8],
+        'diversity': data[9],
+        'i_and_s': data[10],
+        'vis_lit_perf_arts': data[11],
+        'eng_comp': data[12],
+        'writing': data[13]
+    }
+    return base_info
+
+
+def get_single_course_joins(sql: str, params: tuple) -> list:
+    
+    
+    return []

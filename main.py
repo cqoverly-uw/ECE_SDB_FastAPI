@@ -67,8 +67,14 @@ async def get_course_info(
     sql_base_info = sql_scripts.single_course_info
     sql_joins = sql_scripts.single_course_joins_info
     if dept and crs_number: 
-        course_base_info: dict = courses.get_course_info(sql, (dept, crs_number))
-        joined_courses: list = courses.get_joint
+        course_base_info: dict = courses.get_single_course_info(
+            sql_base_info,
+            (dept, crs_number)
+        )
+        joined_courses: list = courses.get_single_course_joins(
+            sql_joins,
+            (dept, crs_number)
+        )
         full_course_info = {
             'request': request,
             'joined_courses': joined_courses,
