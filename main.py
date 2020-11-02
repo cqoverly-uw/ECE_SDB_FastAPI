@@ -29,7 +29,7 @@ async def read_item(request: Request, id:str):
 
 ##### HTTP calls for information regarding students ####
 @app.get("/student_info/", response_class=HTMLResponse)
-async def get_student_info_from_sid(request: Request, sid: Optional[str]=Query(None, max_length=7)):
+async def get_student_info_from_sid(request: Request, sid: Optional[str]=Query(None)):
     sql: str = None
     if sid:
         if '@' not in sid:
