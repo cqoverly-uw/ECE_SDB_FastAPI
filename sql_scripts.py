@@ -317,12 +317,8 @@ joint_courses_query = '''
 '''
 
 single_course_joins_info = '''
-	SELECT 
-		jc.department_abbrev,
-		jc.course_number,
-		jc.joint_dept_abbrev,
-		jc.joint_course_num,
-		ct.resp_curric_abbr
+	SELECT DISTINCT
+        jc.joint_dept_abbrev, jc.joint_course_number
 
 	FROM sec.sr_course_titles_joint_course jc
 	INNER JOIN sec.sr_course_titles ct
@@ -331,7 +327,7 @@ single_course_joins_info = '''
 			AND (jc.course_number = ct.course_number)
 	)
 
-	WHERE jc.department_abbrev = 'E E'
+	WHERE jc.department_abbrev = (?)
 	AND jc.course_number = (?)
 	AND ct.last_eff_yr = 9999
 

@@ -53,6 +53,8 @@ def get_single_course_info(sql: str, params: tuple) -> dict:
 
 
 def get_single_course_joins(sql: str, params: tuple) -> list:
+    cursor = get_cursor()
+    cursor.execute(sql, params)
+    joined_courses = [c for c in cursor]
     
-    
-    return []
+    return joined_courses
