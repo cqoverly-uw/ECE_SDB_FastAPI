@@ -318,7 +318,7 @@ joint_courses_query = '''
 
 single_course_joins_info = '''
 	SELECT DISTINCT
-        jc.joint_dept_abbrev, jc.joint_course_number
+        CONCAT(jc.joint_dept_abbrev, jc.joint_course_num) joined_course
 
 	FROM sec.sr_course_titles_joint_course jc
 	INNER JOIN sec.sr_course_titles ct
@@ -331,7 +331,7 @@ single_course_joins_info = '''
 	AND jc.course_number = (?)
 	AND ct.last_eff_yr = 9999
 
-	ORDER BY jc.course_number, jc.joint_dept_abbrev
+	ORDER BY joined_course
 	;
 '''
 
