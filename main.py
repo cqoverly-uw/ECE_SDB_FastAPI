@@ -110,6 +110,8 @@ async def get_course_history(
             )
         )
         course_history['request']=request
+        course_history['start']=start
+        course_history['end']=end
 
         return(templates.TemplateResponse("course_history.html", course_history))
     else:
