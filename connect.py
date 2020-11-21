@@ -36,7 +36,11 @@ def get_cursor():
         try:
             # print('No usable mssql driver. Attempting to connect via FreeTDS')
             # db = input('Enter database name: ')
-            conn = pyodbc.connect('DRIVER={FreeTDS};SERVER=edwpub.s.uw.edu; PORT=1433;DATABASE='+database+';UID='+username+';PWD='+password+';')
+            conn = pyodbc.connect(f'DSN=uwsdb;DATABASE={database};UID={username};PWD={password};')
+            
+            # conn = pyodbc.connect('DSN=uwsdb;DATABASE='+database+';UID='+username+';PWD='+password+';')
+            
+            # conn = pyodbc.connect('DRIVER={FreeTDS};SERVER=edwpub.s.uw.edu; PORT=1433;DATABASE='+database+';UID='+username+';PWD='+password+';')
         except pyodbc.OperationalError:
             print("Not able to connect with provided methods")
             sys.exit()
@@ -49,5 +53,7 @@ def get_cursor():
 
 
 if __name__ == '__main__':
-    cur = get_cursor('UWSDBDataStore')
+    cur = get_cursor()
     cur.execute("SELECT 'YES'")
+    for i in cur:
+        print(i)
