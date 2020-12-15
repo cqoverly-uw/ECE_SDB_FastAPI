@@ -414,3 +414,38 @@ current_ee_undergrads_query = '''
 	;
 '''
 
+current_time_schedule_link = '''
+DECLARE @TODAY DATETIME;
+SET @TODAY = CONVERT(DATE, GETDATE())
+
+IF (?) > (SELECT CONVERT(DATE, gl_last_day_class) FROM sec.sdbdb01)
+	SELECT 
+		CONCAT(
+			'https://www.washington.edu/students/timeschd/',
+			CASE sdb01.gl_regis_qtr
+				WHEN 1 THEN 'WIN'
+				WHEN 2 THEN 'SPR'
+				WHEN 3 THEN 'SUM'
+				WHEN 4 THEN 'AUT'
+			END,
+			sdb01.current_yr,
+			'/ee.html'
+			) ts_link
+
+	FROM sec.sdbdb01 sdb01
+ELSE
+	SELECT 
+		CONCAT(
+			'https://www.washington.edu/students/timeschd/',
+			CASE sdb01.current_qtr
+				WHEN 1 THEN 'WIN'
+				WHEN 2 THEN 'SPR'
+				WHEN 3 THEN 'SUM'
+				WHEN 4 THEN 'AUT'
+			END,
+			sdb01.current_yr,
+			'/ee.html'
+			) ts_link
+
+	FROM sec.sdbdb01 sdb01
+'''
