@@ -36,7 +36,12 @@
             </div>
             <div class="col">
                 <p></p>
-                <h4>Other Information</h4>
+                <h4>Current Schedule</h4>
+                <ul>
+                {% for c in current_schedule %}
+                    <li>{{ c }}</li>
+                {% endfor %}
+                </ul>
             </div>
             <div class="col">
                 <p></p>

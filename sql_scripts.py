@@ -190,6 +190,53 @@ student_from_alt_email = """
 	;
 """
 
+
+student_current_schedule_query = """
+DECLARE @YEAR SMALLINT;
+DECLARE @QTR TINYINT;
+
+SET @YEAR = (
+	SELECT current_yr
+	FROM sec.sdbdb01
+);
+SET @QTR = (
+	SELECT current_qtr
+	FROM sec.sdbdb01
+);
+
+SELECT 
+	rc.regis_yr,
+	rc.regis_qtr,
+	rc.sln,
+	rc.crs_curric_abbr,
+	rc.crs_number,
+	rc.crs_section_id,
+	rc.credits,
+	ci.fac_name
+
+FROM sec.registration_courses rc
+INNER JOIN sec.student_1 s1
+ON rc.system_key = s1.system_key
+INNER JOIN sec.sr_course_instr ci
+ON (
+		ci.fac_yr = @YEAR AND
+		ci.fac_qtr = @QTR AND
+		ci.fac_curric_abbr = rc.crs_curric_abbr AND
+		ci.fac_course_no = rc.crs_number AND
+		ci.fac_sect_id = rc.crs_section_id AND
+		ci.fac_pct_involve > 40
+)
+
+WHERE rc.regis_yr = @YEAR
+AND rc.regis_qtr = @QTR
+AND rc.request_status IN ('A', 'C', 'R')
+AND LEN(rc.crs_section_id) = 1
+AND s1.student_no = ? 
+
+ORDER BY rc.crs_curric_abbr, rc.crs_number
+
+"""
+
 fac_crs_history_query = """
 	SELECT DISTINCT
 		ts.ts_year yr,

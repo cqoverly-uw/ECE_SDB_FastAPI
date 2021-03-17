@@ -22,7 +22,6 @@ def get_student_data(sql: str, sid: str)-> dict:
     deg_pathway = data[8]
     deg_level = data[9]
     deg_type = data[10]
-    # cum_gpa = data[11]
     deg_status = data[11]
     deg_earned_yr = data[12]
     deg_earned_qtr = data[13]
@@ -45,6 +44,15 @@ def get_student_data(sql: str, sid: str)-> dict:
     }
 
     return student_info
+
+
+def get_student_current_schedule(sql:str, sid:int) -> list:
+    cursor = get_cursor()
+    cursor.execute(sql, sid)
+    print(sql)
+    print(sid)
+    data = [c for c in cursor]
+    return data
 
 
 def get_current_ee_undergrads_data(sql: str) -> List[tuple]:

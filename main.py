@@ -31,6 +31,8 @@ async def read_item(request: Request, id:str):
 @app.get("/student_info/", response_class=HTMLResponse)
 async def get_student_info_from_sid(request: Request, sid: Optional[str]=Query(None)):
     sql: str = None
+    student_info = None
+    schedule = []
     if sid:
         if '@' not in sid:
             sql = sql_scripts.info_from_sid
@@ -39,7 +41,19 @@ async def get_student_info_from_sid(request: Request, sid: Optional[str]=Query(N
         else:
             sql = sql_scripts.student_from_alt_email
         student_info = students.get_student_data(sql, sid)
+        try:
+            student_no = student_info["sid"]
+            schedule_sql = sql_scripts.student_current_schedule_query
+            schedule = students.get_student_current_schedule(schedule_sql, student_no)
+            formatted_schedule = []
+            for c in schedule:
+                s = f"{c[0]}-{c[1]} | {c[2]} | {c[3]} {c[4]}{c[5]} | {c[6]}cr. | {c[7]}"
+                formatted_schedule.append(s)
+            student_info['current_schedule'] = formatted_schedule
+        except KeyError as e:
+            pass
         student_info["request"] = request
+
         return(templates.TemplateResponse("student_info.html", student_info))
     else:
         return(templates.TemplateResponse("student_info.html", {"request":request}))
