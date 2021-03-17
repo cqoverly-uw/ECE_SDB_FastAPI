@@ -43,7 +43,12 @@
             </div>
             <div class="col">
                 <p></p>
-                <h4>Other Information</h4>
+                <h4>Prerequisites</h4>
+                <ul>
+                {% for prereq in prereqs %}
+                    <li>{{ prereq }}</li>
+                {% endfor %}
+                </ul>
             </div>
             <div class="col">
                 <p></p>
