@@ -66,6 +66,8 @@ async def get_course_info(
         crs_number: Optional[int]=Query(None)):
     sql_base_info = sql_scripts.single_course_info
     sql_joins = sql_scripts.single_course_joins_info
+    sql_prereqs = sql_scripts.course_prereqs_query
+    sql_prereq_for = sql_scripts.course_is_prereq_for_query
     if dept and crs_number: 
         course_base_info: dict = courses.get_single_course_info(
             sql_base_info,
@@ -75,9 +77,18 @@ async def get_course_info(
             sql_joins,
             (dept, crs_number)
         )
+        prereqs: list = courses.get_course_prereqs(
+            sql_prereqs,
+            (dept, crs_number)
+        )
+        # prereq_for: list = courses.get_is_prereq_for(
+        #     sql_prereq_for,
+        #     (dept, crs_number)
+        # )
         full_course_info = {
             'request': request,
             'joined_courses': joined_courses,
+            'prereqs': prereqs,
             **course_base_info
         }
         return(templates.TemplateResponse("course_info.html", full_course_info)) 

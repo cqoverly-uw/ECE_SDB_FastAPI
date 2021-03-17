@@ -55,6 +55,27 @@ def get_single_course_info(sql: str, params: tuple) -> dict:
     return base_info
 
 
+def get_course_prereqs(sql:str, params:tuple) -> list:
+    prereqs = None
+    cursor = get_cursor()
+    cursor.execute(sql, params)
+    try:
+        prereqs = [p for p in cursor]
+        return prereqs
+    except IndexError:
+        return []
+    
+
+def get_is_prereq_for(sql:str, params:tuple) -> list:
+    prereq_for: list = None
+    cursor = get_cursor()
+    cursor.execute(sql, params)
+    try:
+        prereq_for = [p for p in cursor]
+        return prereq_for
+    except IndexError:
+        return []
+
 def get_single_course_joins(sql: str, params: tuple) -> list:
     cursor = get_cursor()
     cursor.execute(sql, params)

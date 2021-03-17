@@ -1,7 +1,7 @@
 # This is a place to put all the sql scripts used for the API
 
 
-info_from_sid = '''
+info_from_sid = """
 	SELECT 
 		s1.student_no,
 		s1.student_name_lowc,
@@ -43,7 +43,7 @@ info_from_sid = '''
 
 	WHERE s1.student_no = (?)
 	;
-'''
+"""
 
 course_history = """
 	SELECT DISTINCT
@@ -101,7 +101,7 @@ course_history = """
 """
 
 
-student_from_uw_email = '''
+student_from_uw_email = """
 	SELECT 
 		s1.student_no,
 		s1.student_name_lowc,
@@ -143,10 +143,10 @@ student_from_uw_email = '''
 
 	WHERE a.e_mail_ucs = (?)
 	;
-'''
+"""
 
 
-student_from_alt_email = '''
+student_from_alt_email = """
 	SELECT 
 		s1.student_no,
 		s1.student_name_lowc,
@@ -188,9 +188,9 @@ student_from_alt_email = '''
 
 	WHERE a.e_mail_other = (?)
 	;
-'''
+"""
 
-fac_crs_history_query = '''
+fac_crs_history_query = """
 	SELECT DISTINCT
 		ts.ts_year yr,
 		ts.ts_quarter qtr,
@@ -239,9 +239,9 @@ fac_crs_history_query = '''
 
 	ORDER BY ts.ts_year, ts.ts_quarter, ts.dept_abbrev, ts.course_no
 	;
-'''
+"""
 
-faculty_code_query = '''
+faculty_code_query = """
 	SELECT DISTINCT
 		ci.fac_ssn,
 		ci.fac_name,
@@ -259,10 +259,10 @@ faculty_code_query = '''
 	AND ci.fac_curric_abbr = 'E E'
 	AND ci.fac_seq_no > 9999
 	;
-'''
+"""
 
 
-faculty_list_query = '''
+faculty_list_query = """
 	SELECT DISTINCT 
 		ci.fac_ssn,
 		(
@@ -290,10 +290,10 @@ faculty_list_query = '''
 	AND RTRIM(ci.fac_name) <> ''
 	ORDER BY inst_name
 	;
-'''
+"""
 
 
-joint_courses_query = '''
+joint_courses_query = """
 	SELECT DISTINCT
 		jc.department_abbrev,
 		jc.course_number,
@@ -314,9 +314,9 @@ joint_courses_query = '''
 
 	ORDER BY jc.course_number, jc.joint_dept_abbrev
 	;
-'''
+"""
 
-single_course_joins_info = '''
+single_course_joins_info = """
 	SELECT DISTINCT
         CONCAT(jc.joint_dept_abbrev, jc.joint_course_num) joined_course
 
@@ -333,9 +333,9 @@ single_course_joins_info = '''
 
 	ORDER BY joined_course
 	;
-'''
+"""
 
-single_course_info = '''
+single_course_info = """
 	SELECT 
 		ct.department_abbrev,
 		ct.course_number,
@@ -370,10 +370,44 @@ single_course_info = '''
 	AND ct.course_number = (?)
 	AND ct.course_branch = 0
 	;
-'''
+"""
 
+course_prereqs_query = """
+SELECT 
+    cp.pr_curric_abbr,
+	cp.pr_course_no,
+    CASE cp.pr_and_or
+		WHEN 'O' THEN 'Option'
+		ELSE ''
+	END pr_and_r,
+    CASE cp.pr_concurrency
+		WHEN 'N' THEN ''
+		ELSE 'Concurrent Allowed'
+	END pr_concurrency
 
-current_ee_undergrads_query = '''
+FROM sec.sr_course_prereq cp
+
+WHERE cp.department_abbrev  = ?
+AND cp.course_number = ?
+AND cp.last_eff_yr = 9999
+;
+"""
+
+course_is_prereq_for_query = """
+SELECT 
+	cp.department_abbrev.
+	cp.course_number,
+	cp.pr_and_or,
+	cp.pr_concurrency
+
+FROM sec.sr_course_prereq cp
+
+WHERE (cp.pr_curric_abbr = ? and cp.pr_course_no = ?)
+AND cp.last_eff_yr = 9999
+AND cp.course_branch = 0;
+"""
+
+current_ee_undergrads_query = """
 	SELECT DISTINCT
 		s1.student_no,
 		s1.student_name_lowc,
@@ -412,9 +446,9 @@ current_ee_undergrads_query = '''
 
 	ORDER BY s1.student_name_lowc
 	;
-'''
+"""
 
-current_time_schedule_link = '''
+current_time_schedule_link = """
 DECLARE @TODAY DATETIME;
 SET @TODAY = CONVERT(DATE, GETDATE())
 
@@ -448,4 +482,4 @@ ELSE
 			) ts_link
 
 	FROM sec.sdbdb01 sdb01
-'''
+"""
