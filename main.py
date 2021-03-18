@@ -47,8 +47,14 @@ async def get_student_info_from_sid(request: Request, sid: Optional[str]=Query(N
             schedule = students.get_student_current_schedule(schedule_sql, student_no)
             formatted_schedule = []
             for c in schedule:
-                s = f"{c[0]}-{c[1]} | {c[2]} | {c[3]} {c[4]}{c[5]} | {c[6]}cr. | {c[7]}"
-                formatted_schedule.append(s)
+                qtr_yr = f"{c[0]}-{c[1]}"
+                sln = c[2]
+                course = f"{c[3]} {c[4]}{c[5]}"
+                credits = c[6]
+                instr = c[7]
+                formatted_schedule.append(
+                    (qtr_yr, sln, course, credits, instr)
+                )
             student_info['current_schedule'] = formatted_schedule
         except KeyError as e:
             pass

@@ -37,11 +37,26 @@
             <div class="col">
                 <p></p>
                 <h4>Current Schedule</h4>
-                <ul>
-                {% for c in current_schedule %}
-                    <li>{{ c }}</li>
-                {% endfor %}
-                </ul>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>qtr-Yr</th>
+                            <th>SLN</th>
+                            <th>Course</th>
+                            <th>Cr.</th>
+                            <th>Instr.</th>
+                        </tr>
+                    </thead>
+                    <body>
+                    {% for c in current_schedule %}
+                        <tr>
+                            {% for datum in c %}
+                            <td>{{ datum }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </body>
+                </table>
             </div>
             <div class="col">
                 <p></p>
