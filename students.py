@@ -1,6 +1,7 @@
 from typing import List
 
 from connect import get_cursor
+import sql_scripts
 
 
 def get_student_data(sql: str, sid: str)-> dict:
@@ -46,12 +47,19 @@ def get_student_data(sql: str, sid: str)-> dict:
     return student_info
 
 
-def get_student_current_schedule(sql:str, sid:int) -> list:
+def get_student_current_schedule(sid:int) -> list:
+    sql = sql_scripts.student_current_schedule_query
     cursor = get_cursor()
     cursor.execute(sql, sid)
-    print(sql)
-    print(sid)
     data = [c for c in cursor]
+    return data
+
+
+def get_student_transcript(sid:int) -> list:
+    sql = sql_scripts.student_transcript_query
+    cursor = get_cursor()
+    cursor.execute(sql, sid)
+    data = [course for course in cursor]
     return data
 
 

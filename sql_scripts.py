@@ -237,6 +237,28 @@ ORDER BY rc.crs_curric_abbr, rc.crs_number
 
 """
 
+
+student_transcript_query = """
+SELECT DISTINCT
+	CONCAT(t.tran_yr, '-', t.tran_qtr) yr_qtr,
+	CONCAT(ct.dept_abbrev, ' ', ct.course_number, ct.section_id) course,
+	ct.course_credits,
+	ct.grade
+
+FROM sec.transcript t
+INNER JOIN sec.transcript_courses_taken ct
+ON (t.tran_yr = ct.tran_yr AND  t.tran_qtr = ct.tran_qtr)
+INNER JOIN sec.student_1 s1
+ON ct.system_key = s1.system_key
+
+WHERE s1.student_no = ?
+AND LEN(ct.section_id) = 1
+
+ORDER BY yr_qtr, course
+
+"""
+
+
 fac_crs_history_query = """
 	SELECT DISTINCT
 		ts.ts_year yr,

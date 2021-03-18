@@ -60,7 +60,26 @@
             </div>
             <div class="col">
                 <p></p>
-                <h4>More Information</h4>
+                <h4>Transcript</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Tr-Qtr</th>
+                            <th>Course</th>
+                            <th>Cr.</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+                    <body>
+                    {% for c in transcript %}
+                        <tr>
+                            {% for datum in c %}
+                            <td>{{ datum }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </body>
+                </table>
             </div>
         </div>
         <p><a href="/">Home</a></p>

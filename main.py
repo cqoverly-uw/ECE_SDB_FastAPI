@@ -33,6 +33,8 @@ async def get_student_info_from_sid(request: Request, sid: Optional[str]=Query(N
     sql: str = None
     student_info = None
     schedule = []
+
+    # get general student information based on student no. or email address
     if sid:
         if '@' not in sid:
             sql = sql_scripts.info_from_sid
@@ -41,10 +43,11 @@ async def get_student_info_from_sid(request: Request, sid: Optional[str]=Query(N
         else:
             sql = sql_scripts.student_from_alt_email
         student_info = students.get_student_data(sql, sid)
+
+        # if student was returned, get current schedule base in returned student no.
         try:
             student_no = student_info["sid"]
-            schedule_sql = sql_scripts.student_current_schedule_query
-            schedule = students.get_student_current_schedule(schedule_sql, student_no)
+            schedule = students.get_student_current_schedule(student_no)
             formatted_schedule = []
             for c in schedule:
                 qtr_yr = f"{c[0]}-{c[1]}"
@@ -56,7 +59,15 @@ async def get_student_info_from_sid(request: Request, sid: Optional[str]=Query(N
                     (qtr_yr, sln, course, credits, instr)
                 )
             student_info['current_schedule'] = formatted_schedule
-        except KeyError as e:
+        except KeyError as e:  # no schedule is returned
+            pass
+
+        # if a student was retured, get the transcript
+        try: 
+            student_no = student_info["sid"]
+            transcript_data = students.get_student_transcript(student_no)
+            student_info["transcript"] = transcript_data
+        except KeyError as e:  # no transcript
             pass
         student_info["request"] = request
 
