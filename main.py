@@ -42,7 +42,10 @@ async def get_student_info_from_sid(request: Request, sid: Optional[str]=Query(N
             sql = sql_scripts.student_from_uw_email
         else:
             sql = sql_scripts.student_from_alt_email
-        student_info = students.get_student_data(sql, sid)
+        try:
+            student_info = students.get_student_data(sql, sid)
+        except Exception as e:
+            return(templates.TemplateResponse("student_info.html", {"request":request}))
 
         # if student was returned, get current schedule base in returned student no.
         try:
