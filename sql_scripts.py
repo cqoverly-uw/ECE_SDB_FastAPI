@@ -224,14 +224,14 @@ SELECT
 			AND fac_seq_no = rc.fac_seq_no
 		)
 		ELSE (
-			SELECT fac_name 
+			SELECT TOP 1 fac_name 
 			FROM sec.sr_course_instr 
 			WHERE fac_yr = @YEAR
 			AND fac_qtr = @QTR
 			AND fac_curric_abbr = rc.crs_curric_abbr 
 			AND fac_course_no = rc.crs_number 
 			AND fac_sect_id = rc.crs_section_id
-			AND fac_pct_involve > 40
+			AND fac_pct_involve > 45
 		)
 	END	instructor
 
