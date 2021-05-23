@@ -54,6 +54,6 @@ def get_cursor():
 
 if __name__ == '__main__':
     cur = get_cursor()
-    cur.execute("SELECT 'YES'")
+    cur.execute("SELECT TOP 1 student_name_lowc FROM sec.student_1")
     for i in cur:
         print(i)
