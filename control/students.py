@@ -4,13 +4,13 @@ from connect import get_cursor
 import sql_scripts
 
 
-def get_student_data(sql: str, sid: str)-> dict:
+def get_student_data(sql: str, sid: str) -> dict:
 
     cursor = get_cursor()
     cursor.execute(sql, sid)
     data = [s for s in cursor][0]
 
-    #parse data into student attributes
+    # parse data into student attributes
     student_no = data[0]
     split_name = data[1].split(sep=',')
     last_name, first_name = split_name[0], split_name[1]
@@ -47,7 +47,7 @@ def get_student_data(sql: str, sid: str)-> dict:
     return student_info
 
 
-def get_student_current_schedule(sid:int) -> list:
+def get_student_current_schedule(sid: int) -> list:
     sql = sql_scripts.student_current_schedule_query
     cursor = get_cursor()
     cursor.execute(sql, sid)
@@ -55,7 +55,7 @@ def get_student_current_schedule(sid:int) -> list:
     return data
 
 
-def get_student_transcript(sid:int) -> list:
+def get_student_transcript(sid: int) -> list:
     sql = sql_scripts.student_transcript_query
     cursor = get_cursor()
     cursor.execute(sql, sid)

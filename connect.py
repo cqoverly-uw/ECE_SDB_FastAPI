@@ -1,7 +1,5 @@
 import os
-from typing import List
 
-from fastapi import params
 import pyodbc
 import sys
 from pathlib import Path

@@ -3,7 +3,6 @@ from typing import List
 from connect import get_cursor
 
 
-
 def get_fac_crs_info(sql: str, search_parameters: tuple) -> dict:
     cursor = get_cursor()
     cursor.execute(sql, search_parameters)
