@@ -50,9 +50,9 @@ async def get_course_info(
             'prereqs': prereqs,
             **course_base_info
         }
-        return(templates.TemplateResponse("course_info.html", full_course_info)) 
+        return(templates.TemplateResponse("courses/course_info.html", full_course_info)) 
     else:
-        return(templates.TemplateResponse("course_info.html", {'request': request}))
+        return(templates.TemplateResponse("courses/course_info.html", {'request': request}))
 
 
 @router.get("/course_history/", response_class=HTMLResponse)
@@ -83,9 +83,9 @@ async def get_course_history(
         course_history['start'] = start
         course_history['end'] = end
 
-        return(templates.TemplateResponse("course_history.html", course_history))
+        return(templates.TemplateResponse("courses/course_history.html", course_history))
     else:
-        return(templates.TemplateResponse("course_history.html", {'request':request}))
+        return(templates.TemplateResponse("courses/course_history.html", {'request':request}))
 
 
 @router.get("/joint_courses.html/", response_class=HTMLResponse)
@@ -97,4 +97,4 @@ async def get_joint_course_list(request: Request):
         'joint_courses_data': data
     }
 
-    return(templates.TemplateResponse("joint_courses.html", joint_courses_info))
+    return(templates.TemplateResponse("courses/joint_courses.html", joint_courses_info))
