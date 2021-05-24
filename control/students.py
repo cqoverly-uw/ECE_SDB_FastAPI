@@ -12,7 +12,7 @@ def get_student_data(sql: str, sid: str) -> dict:
 
     # parse data into student attributes
     student_no = data[0]
-    split_name = data[1].split(sep=',')
+    split_name = data[1].split(sep=",")
     last_name, first_name = split_name[0], split_name[1]
     pref_first_name = data[2].strip()
     qtrs_used = data[3]
@@ -32,16 +32,16 @@ def get_student_data(sql: str, sid: str) -> dict:
 
     # package data for injection into template
     student_info = {
-            "sid": student_no,
-            "name": f'{first_name} {last_name}',
-            "qtrs_used": qtrs_used,
-            "uw_email": uw_email,
-            "other_email": alt_email,
-            "campus": campus,
-            "major": major_abbr,
-            "degree": f'{deg_pathway}-{deg_level}{deg_type}',
-            "degree_status": deg_status,
-            "degree_earned": f'{deg_earned_qtr}-{deg_earned_yr}'
+        "sid": student_no,
+        "name": f"{first_name} {last_name}",
+        "qtrs_used": qtrs_used,
+        "uw_email": uw_email,
+        "other_email": alt_email,
+        "campus": campus,
+        "major": major_abbr,
+        "degree": f"{deg_pathway}-{deg_level}{deg_type}",
+        "degree_status": deg_status,
+        "degree_earned": f"{deg_earned_qtr}-{deg_earned_yr}",
     }
 
     return student_info
@@ -69,5 +69,3 @@ def get_current_ee_undergrads_data(sql: str) -> List[tuple]:
     student_data = [s for s in cursor]
 
     return student_data
-
-

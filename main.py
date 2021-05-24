@@ -3,6 +3,7 @@ import uvicorn
 import fastapi
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+
 # from starlette.routing import request_response
 
 from views import courses
@@ -19,7 +20,7 @@ templates = Jinja2Templates(directory="templates")
 
 def main():
     configure(dev_mode=True)
-    uvicorn.run(app, host='127.0.0.7', port=8000, debug=True)
+    uvicorn.run(app, host="127.0.0.7", port=8000, debug=True)
 
 
 def configure(dev_mode: bool):
@@ -42,14 +43,3 @@ if __name__ == "__main__":
     main()
 else:
     configure(dev_mode=False)
-
-
-
-
-
-
-
-
-
-
-
