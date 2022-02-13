@@ -564,3 +564,27 @@ ELSE
 
 	FROM sec.sdbdb01 sdb01
 """
+
+get_room_attributes = """
+SELECT 
+	rm.sr_room_bldg,
+	rm.sr_room_room_no,
+	rm.sr_room_capacity,
+	attr.room_char_desc,
+	CASE attr.room_char_s25
+		WHEN 1 THEN 'True'
+		ELSE 'False'
+	END has_attr
+
+
+FROM sec.sr_room_master rm
+INNER JOIN sec.sr_room_master_attribute rma
+ON (rm.sr_room_bldg = rma.sr_room_bldg AND rm.sr_room_room_no = rma.sr_room_room_no)
+INNER JOIN sec.sys_tbl_90_room_attribute attr
+ON rma.sr_room_char_no = attr.table_key
+
+WHERE 
+	rm.sr_room_campus = 0
+	AND rm.sr_room_bldg = ?
+	AND rm.sr_room_room_no = ?
+"""

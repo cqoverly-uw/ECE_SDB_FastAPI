@@ -1,0 +1,47 @@
+{% extends "shared/base.html" %}
+{% block title %}Room Info{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div>
+                    <form>
+                        <p></p>
+                        <label for="bldg"><h6>Building: </h6></label><br>
+                        <input type="text" id="bldg" name="bldg" value="" autofocus><br><br>
+                        <label for="room_no"><h6>Room No.: </h6></label><br>
+                        <input type="text" id="room_no" name="room_no" value=""><br><br>
+                        <p><input type="submit"></p>
+                    </form>
+                </div>
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        <div class="row">   
+            <div class="col">
+                <div>
+                    <h5> {{ bldg }} {{ room_no }} - Capacity {{ capacity }}</h5>
+                    <p></p>
+                
+                    <h4>Attributes</h4>
+                    <ul>
+                    {% for attr in attributes %}
+                        <li>{{ attr[0] }}: {{ attr[1] }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col">
+
+            </div>
+            <div class="col">
+                <p></p>
+                <h4>More Information</h4>
+            </div>
+        </div>     
+    </div>
+</body>
+{% endblock %}

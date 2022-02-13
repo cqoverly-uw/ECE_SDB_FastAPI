@@ -10,6 +10,7 @@ from views import courses
 from views import faculty
 from views import home
 from views import students
+from views import rooms
 
 app = fastapi.FastAPI()
 
@@ -37,6 +38,7 @@ def configure_routes():
     app.include_router(faculty.router)
     app.include_router(home.router)
     app.include_router(students.router)
+    app.include_router(rooms.router)
 
 
 if __name__ == "__main__":
