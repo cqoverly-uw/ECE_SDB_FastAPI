@@ -36,3 +36,35 @@ async def get_room_info(
 
     else:
         return templates.TemplateResponse("rooms/room_info.html", {"request": request})
+
+
+@router.get("/room_availability/", response_class=HTMLResponse)
+async def get_room_availability(
+    request: Request,
+    year: Optional[int] = None,
+    days: Optional[str] = None,
+    qtr: Optional[int] = None,
+    start: Optional[str] = None,
+    end: Optional[str] = None,
+    min_cap: Optional[int] = None,
+    max_cap: Optional[int] = None
+):
+    if year and qtr and days and start and end and min_cap and max_cap:
+        all_rooms_sql = sql_scripts.get_rooms
+        room_schedule_sql = sql_scripts.get_room_schedule
+        room_avail_sql = sql_scripts.get_room_avail
+        all_rooms = rooms.get_rooms(all_rooms_sql, (year, qtr))
+        room_schedule = rooms.get_room_schedule(
+            room_schedule_sql,
+            (year, qtr)
+        )
+        
+        room_availability = rooms.get_room_availability(
+            room_avail_sql,
+            (year, qtr, days, start, end, min_cap, max_cap)
+        )
+        return templates.TemplateResponse(
+            "rooms/room_availability.html", room_availability
+        )
+    else:
+        return templates.TemplateResponse("rooms/room_availability.html", {"request": request})

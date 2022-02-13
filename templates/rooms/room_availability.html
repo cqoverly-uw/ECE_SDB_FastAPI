@@ -1,0 +1,52 @@
+{% extends "shared/base.html" %}
+{% block title %}Room Info{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div>
+                    <form>
+                        <p></p>
+                        <label for="year"><h6>Year: </h6></label><br>
+                        <input type="text" id="bldg" name="bldg" value="" autofocus><br><br>
+                        <label for="quarter"><h6>Qtr: </h6></label><br>
+                        <input type="text" id="quarter" name="quarter" value=""><br><br>
+                        <label for="min"><h6>Min Cap: </h6></label><br>
+                        <input type="text" id="min" name="min" value=""><br><br>
+                        <label for="max"><h6>Max Cap: </h6></label><br>
+                        <input type="text" id="max" name="max" value=""><br><br>
+                        <p><input type="submit"></p>
+                    </form>
+                </div>
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        <div class="row">   
+           <body>
+    <div class="container-fluid">
+        <div>
+            <h3>Available Rooms</h3>
+            <table class="table w-auto table-sm table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Room</th>
+                        <th>Capacity</th>
+                    </tr>
+                <thead>
+                <tbody>  
+                {% for bldg, room_no, capacity in rooms %}
+                    <tr>
+                        <td> {{ bldg }} {{ room_no }} </td>
+                        <td> {{ capacity }} </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

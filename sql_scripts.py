@@ -565,6 +565,7 @@ ELSE
 	FROM sec.sdbdb01 sdb01
 """
 
+# ROOMS -----
 get_room_attributes = """
 SELECT 
 	rm.sr_room_bldg,
@@ -587,4 +588,42 @@ WHERE
 	rm.sr_room_campus = 0
 	AND rm.sr_room_bldg = ?
 	AND rm.sr_room_room_no = ?
+"""
+
+get_rooms = """
+SELECT DISTINCT
+	RTRIM(mt.building) bldg,
+	RTRIM(mt.room_number) room_no
+	
+FROM sec.time_sched_meeting_times mt
+
+WHERE 
+	mt.course_branch = 0
+	AND mt.ts_year = ? 
+	AND mt.ts_quarter = ?
+
+ORDER BY bldg, room_no
+"""
+
+get_room_schedule = """
+SELECT DISTINCT
+	RTRIM(mt.building) bldg,
+	RTRIM(mt.room_number) room_no,
+	mt.days_of_week,
+	mt.start_time,
+	mt.end_time,
+	ts.room_cap
+	
+FROM sec.time_sched_meeting_times mt
+INNER JOIN sec.time_schedule ts
+ON (
+		(mt.dept_abbrev = ts.dept_abbrev ) AND
+		(mt.course_no = ts.course_no) AND
+		(mt.section_id = ts.section_id)
+)
+
+WHERE 
+	mt.course_branch = 0
+	AND mt.ts_year = ? 
+	AND mt.ts_quarter = ?
 """
