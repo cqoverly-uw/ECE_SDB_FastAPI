@@ -62,10 +62,7 @@ async def get_course_history(
     start: Optional[str] = None,
     end: Optional[str] = None,
 ):
-    # dept = dept_abbr
-    # number = crs_no
-    # start = start_yr
-    # end = end_yr
+
 
     if dept and number and start and end:
         sql = sql_scripts.course_history
