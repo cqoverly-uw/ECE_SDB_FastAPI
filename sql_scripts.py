@@ -1,6 +1,6 @@
 # This is a place to put all the sql scripts used for the API
 
-
+# STUDENT QUERIES
 info_from_sid = """
 	SELECT 
 		s1.student_no,
@@ -42,61 +42,6 @@ info_from_sid = """
 	ON s1.system_key = di.system_key
 
 	WHERE s1.student_no = (?)
-	;
-"""
-
-course_history = """
-	SELECT DISTINCT
-		ts.ts_year,
-		ts.ts_quarter,
-		ts.dept_abbrev,
-		ts.course_no,
-		--ts.section_id,
-		ts.section_type_code,
-		mt.section_id,
-		mt.index1 AS 'meeting_no',
-		--ts.day_of_week,
-		mt.days_of_week,
-		mt.building,
-		mt.room_number,
-		--ts.starting_time,
-		mt.start_time,
-		--ts.ending_time,
-		mt.end_time,
-		ts.current_enroll,
-		ts.l_e_enroll,
-		ts.students_denied,
-		ts.students_added,
-		ts.students_dropped,
-		ci.fac_name,
-		ts.course_title,
-		ts.srs_comment
-
-	FROM sec.time_schedule ts
-	LEFT JOIN sec.sr_course_instr ci
-	ON (
-		ci.fac_curric_abbr = ts.dept_abbrev
-		AND ci.fac_course_no = ts.course_no
-		AND ci.fac_yr = ts.ts_year
-		AND ci.fac_qtr = ts.ts_quarter
-		AND ci.fac_curric_abbr = ts.dept_abbrev
-		AND ci.fac_sect_id = ts.section_id
-	)
-	LEFT JOIN sec.time_sched_meeting_times mt
-	ON (
-		mt.dept_abbrev = ts.dept_abbrev
-		AND mt.course_no = ts.course_no
-		AND mt.ts_year = ts.ts_year
-		AND mt.ts_quarter = ts.ts_quarter
-		AND mt.section_id = ts.section_id
-	)
-			
-	WHERE ts.ts_year BETWEEN (?) AND (?)
-	AND ts.dept_abbrev = (?)
-	AND ts.course_no = (?)
-	AND ci.fac_pct_involve > 49
-
-	ORDER BY ts.ts_year, ts.ts_quarter, mt.section_id
 	;
 """
 
@@ -271,6 +216,106 @@ ORDER BY yr_qtr, course
 """
 
 
+current_ee_undergrads_query = """
+	SELECT DISTINCT
+		s1.student_no,
+		s1.student_name_lowc,
+		s1.student_name_pn_f,
+		a.e_mail_ucs uw_email,
+		s1.spp_qtrs_used,
+		CASE cm.pathway
+			WHEN 0 THEN CONCAT('00','-',cm.deg_level,cm.deg_type)
+			ELSE CONCAT(cm.pathway,'-',cm.deg_level,cm.deg_type)
+		END degree,
+		CASE s1.tot_graded_attmp
+			WHEN 0 THEN 0.0
+			ELSE CONVERT(DECIMAL(4,2), (s1.tot_grade_points/s1.tot_graded_attmp))
+		END cum_gpa
+
+	FROM sec.student_1 s1
+	INNER JOIN sec.student_1_college_major cm
+	ON s1.system_key = cm.system_key
+	INNER JOIN sec.registration_courses rc
+	ON s1.system_key = rc.system_key
+	INNER JOIN sec.addresses a
+	ON s1.system_key = a.system_key
+
+	WHERE cm.deg_level = 1 
+	AND rc.regis_yr = (
+		SELECT TOP 1 sdb1.current_yr
+		FROM sec.sdbdb01 sdb1
+	)
+	AND rc.regis_qtr = (
+		SELECT TOP 1 sdb1.current_qtr
+		FROM sec.sdbdb01 sdb1
+	)
+	AND cm.major_abbr = 'E E'
+	AND rc.request_status IN ('A' ,'C', 'R')
+	AND cm.branch = 0
+
+	ORDER BY s1.student_name_lowc
+	;
+"""
+
+
+#COURSE QUERIES
+course_history = """
+	SELECT DISTINCT
+		ts.ts_year,
+		ts.ts_quarter,
+		ts.dept_abbrev,
+		ts.course_no,
+		--ts.section_id,
+		ts.section_type_code,
+		mt.section_id,
+		mt.index1 AS 'meeting_no',
+		--ts.day_of_week,
+		mt.days_of_week,
+		mt.building,
+		mt.room_number,
+		--ts.starting_time,
+		mt.start_time,
+		--ts.ending_time,
+		mt.end_time,
+		ts.current_enroll,
+		ts.l_e_enroll,
+		ts.students_denied,
+		ts.students_added,
+		ts.students_dropped,
+		ci.fac_name,
+		ts.course_title,
+		ts.srs_comment
+
+	FROM sec.time_schedule ts
+	LEFT JOIN sec.sr_course_instr ci
+	ON (
+		ci.fac_curric_abbr = ts.dept_abbrev
+		AND ci.fac_course_no = ts.course_no
+		AND ci.fac_yr = ts.ts_year
+		AND ci.fac_qtr = ts.ts_quarter
+		AND ci.fac_curric_abbr = ts.dept_abbrev
+		AND ci.fac_sect_id = ts.section_id
+	)
+	LEFT JOIN sec.time_sched_meeting_times mt
+	ON (
+		mt.dept_abbrev = ts.dept_abbrev
+		AND mt.course_no = ts.course_no
+		AND mt.ts_year = ts.ts_year
+		AND mt.ts_quarter = ts.ts_quarter
+		AND mt.section_id = ts.section_id
+	)
+			
+	WHERE ts.ts_year BETWEEN (?) AND (?)
+	AND ts.dept_abbrev = (?)
+	AND ts.course_no = (?)
+	AND ci.fac_pct_involve > 49
+
+	ORDER BY ts.ts_year, ts.ts_quarter, mt.section_id
+	;
+"""
+
+
+# FACULTY QUERIES
 fac_crs_history_query = """
 	SELECT DISTINCT
 		ts.ts_year yr,
@@ -374,6 +419,7 @@ faculty_list_query = """
 """
 
 
+# COURSE QUERIES
 joint_courses_query = """
 	SELECT DISTINCT
 		jc.department_abbrev,
@@ -474,6 +520,7 @@ AND cp.last_eff_yr = 9999
 ;
 """
 
+
 course_is_prereq_for_query = """
 SELECT 
 	cp.department_abbrev.
@@ -488,46 +535,6 @@ AND cp.last_eff_yr = 9999
 AND cp.course_branch = 0;
 """
 
-current_ee_undergrads_query = """
-	SELECT DISTINCT
-		s1.student_no,
-		s1.student_name_lowc,
-		s1.student_name_pn_f,
-		a.e_mail_ucs uw_email,
-		s1.spp_qtrs_used,
-		CASE cm.pathway
-			WHEN 0 THEN CONCAT('00','-',cm.deg_level,cm.deg_type)
-			ELSE CONCAT(cm.pathway,'-',cm.deg_level,cm.deg_type)
-		END degree,
-		CASE s1.tot_graded_attmp
-			WHEN 0 THEN 0.0
-			ELSE CONVERT(DECIMAL(4,2), (s1.tot_grade_points/s1.tot_graded_attmp))
-		END cum_gpa
-
-	FROM sec.student_1 s1
-	INNER JOIN sec.student_1_college_major cm
-	ON s1.system_key = cm.system_key
-	INNER JOIN sec.registration_courses rc
-	ON s1.system_key = rc.system_key
-	INNER JOIN sec.addresses a
-	ON s1.system_key = a.system_key
-
-	WHERE cm.deg_level = 1 
-	AND rc.regis_yr = (
-		SELECT TOP 1 sdb1.current_yr
-		FROM sec.sdbdb01 sdb1
-	)
-	AND rc.regis_qtr = (
-		SELECT TOP 1 sdb1.current_qtr
-		FROM sec.sdbdb01 sdb1
-	)
-	AND cm.major_abbr = 'E E'
-	AND rc.request_status IN ('A' ,'C', 'R')
-	AND cm.branch = 0
-
-	ORDER BY s1.student_name_lowc
-	;
-"""
 
 current_time_schedule_link = """
 DECLARE @TODAY DATETIME;
@@ -565,7 +572,8 @@ ELSE
 	FROM sec.sdbdb01 sdb01
 """
 
-# ROOMS -----
+
+# ROOM QUERIES
 get_room_attributes = """
 SELECT 
 	rm.sr_room_bldg,
@@ -626,4 +634,20 @@ WHERE
 	mt.course_branch = 0
 	AND mt.ts_year = ? 
 	AND mt.ts_quarter = ?
+"""
+
+
+sql_room_search = """
+SELECT 
+	CONCAT(rm.sr_room_bldg, ' ', rm.sr_room_room_no) room,
+	rm.sr_room_capacity
+
+FROM sec.sr_room_master rm
+
+WHERE rm.sr_room_campus = 0
+AND rm.sr_room_gen_assgn = 1
+AND rm.sr_room_capacity BETWEEN ? AND ?
+
+ORDER BY room, rm.sr_room_capacity
+;
 """
