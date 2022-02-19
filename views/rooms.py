@@ -38,6 +38,27 @@ async def get_room_info(
         return templates.TemplateResponse("rooms/room_info.html", {"request": request})
 
 
+@router.get("/room_search/", response_class=HTMLResponse)
+async def get_room_availability(
+    request: Request,
+    min_cap: Optional[int] = None,
+    max_cap: Optional[int] = None
+):
+    if min_cap and max_cap:
+        rooms_sql = sql_scripts.sql_room_search
+        found_rooms = rooms.get_rooms_by_capacity(rooms_sql, (min_cap, max_cap))
+
+        found_rooms["request"] = request
+        found_rooms["min_cap"] = min_cap
+        found_rooms["max_cap"] = max_cap
+
+        return templates.TemplateResponse(
+            "rooms/room_search.html", found_rooms
+        )
+    else:
+        return templates.TemplateResponse("rooms/room_search.html", {"request": request})
+
+
 @router.get("/room_availability/", response_class=HTMLResponse)
 async def get_room_availability(
     request: Request,
