@@ -1,0 +1,45 @@
+{% extends "shared/base.html" %}
+{% block title %}Room Info{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div>
+                    <form>
+                        <p></p>
+                        <label for="min_cap"><h6>Min. Capacity: </h6></label><br>
+                        <input type="text" id="min_cap" name="min_cap" value="{{ min_cap }}" autofocus onfocus="this.select()"><br><br>
+                        <label for="max_cap"><h6>Max. Capacity: </h6></label><br>
+                        <input type="text" id="max_cap" name="max_cap" value="{{ max_cap }}"><br><br>
+                        <p><input type="submit"></p>
+                    </form>
+                </div>
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        <div class="row">   
+            <div class="col">
+                <div>
+                    <h5> Matching Rooms</h5>
+                    <p></p>
+                    <ul>
+                    {% for room in rooms %}
+                        <li><a href="https://www.washington.edu/classroom/{{ room[0] }}+{{ room[1] }}" target="_blank">{{ room[0] }} {{ room[1] }}</a>: {{ room[2] }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col">
+
+            </div>
+            <div class="col">
+                <p></p>
+                <h4>More Information</h4>
+            </div>
+        </div>     
+    </div>
+</body>
+{% endblock %}
