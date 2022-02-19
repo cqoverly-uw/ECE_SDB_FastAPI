@@ -639,7 +639,8 @@ WHERE
 
 sql_room_search = """
 SELECT 
-	CONCAT(rm.sr_room_bldg, ' ', rm.sr_room_room_no) room,
+	RTRIM(rm.sr_room_bldg) bldg,
+	RTRIM(rm.sr_room_room_no) room_no,
 	rm.sr_room_capacity
 
 FROM sec.sr_room_master rm
@@ -648,6 +649,6 @@ WHERE rm.sr_room_campus = 0
 AND rm.sr_room_gen_assgn = 1
 AND rm.sr_room_capacity BETWEEN ? AND ?
 
-ORDER BY room, rm.sr_room_capacity
+ORDER BY rm.sr_room_bldg, rm.sr_room_room_no, rm.sr_room_capacity
 ;
 """
