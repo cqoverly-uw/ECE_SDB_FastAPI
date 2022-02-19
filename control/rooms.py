@@ -33,8 +33,6 @@ def get_rooms(sql: str, params: tuple) -> tuple:
     
 
 
-
-
 def get_room_availability(sql: str, params: tuple) -> dict:
     cursor = get_cursor()
     cursor.execute(sql, params)
@@ -49,6 +47,11 @@ def get_room_availability(sql: str, params: tuple) -> dict:
     return avail_rooms_dict
 
 
+def get_rooms_by_capacity(sql: str, params: tuple) -> dict:
+    cursor = get_cursor()
+    cursor.execute(sql, params)
+    found_rooms = {'rooms': [r for r in cursor]}
+    return found_rooms
 
 
 if __name__ == "__main__":
