@@ -7,7 +7,7 @@ from fastapi.responses import HTMLResponse
 
 # from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from sqlalchemy import tablesample
+# from sqlalchemy import tablesample
 
 # from starlette.routing import request_response
 
