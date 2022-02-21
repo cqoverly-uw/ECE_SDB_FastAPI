@@ -46,7 +46,10 @@ async def get_room_availability(
 ):
     if min_cap and max_cap:
         rooms_sql = sql_scripts.sql_room_search
-        found_rooms = rooms.get_rooms_by_capacity(rooms_sql, (min_cap, max_cap))
+        found_rooms = rooms.get_rooms_by_capacity(
+            rooms_sql,
+            (min_cap, max_cap)
+        )
 
         found_rooms["request"] = request
         found_rooms["min_cap"] = min_cap
@@ -56,7 +59,56 @@ async def get_room_availability(
             "rooms/room_search.html", found_rooms
         )
     else:
-        return templates.TemplateResponse("rooms/room_search.html", {"request": request})
+        return templates.TemplateResponse(
+            "rooms/room_search.html",
+            {"request": request}
+        )
+
+
+@router.get("/new_room_search/", response_class=HTMLResponse)
+async def find_new_room(
+    request: Request,
+    year: Optional[int] = None,
+    quarter: Optional[int] = None,
+    sln: Optional[int] = None,
+    min_cap: Optional[int] = None,
+    max_cap: Optional[int] = None
+):
+
+    if year and quarter and sln and min_cap and max_cap:
+        sql = sql_scripts.query_find_new_room
+        params = (
+                    int(year),
+                    int(quarter),
+                    int(sln),
+                    int(min_cap),
+                    int(max_cap),
+        )
+        found_rooms = rooms.find_new_room_for_sln(sql, params)
+
+        found_rooms["request"] = request
+        found_rooms["year"] = year
+        found_rooms["quarter"] = quarter
+        found_rooms["sln"] = sln
+        found_rooms["min_cap"] = min_cap
+        found_rooms["max_cap"] = max_cap
+        
+        return templates.TemplateResponse(
+            "rooms/new_room_search.html",
+            found_rooms
+        )
+
+    else:
+        return templates.TemplateResponse(
+            "rooms/new_room_search.html",
+            {"request": request}
+        )
+
+
+
+
+
+
 
 
 @router.get("/room_availability/", response_class=HTMLResponse)

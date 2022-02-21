@@ -54,5 +54,12 @@ def get_rooms_by_capacity(sql: str, params: tuple) -> dict:
     return found_rooms
 
 
+def find_new_room_for_sln(sql: str, params: tuple) -> dict:
+    cursor = get_cursor()
+    cursor.execute(sql, params)
+    found_rooms = {"rooms": [r for r in cursor]}
+    return found_rooms
+
+
 if __name__ == "__main__":
     room_attrs = get_room_attrs('ECE', '042')

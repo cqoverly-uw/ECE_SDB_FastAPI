@@ -33,8 +33,9 @@ def get_cursor():
                     + password
                     + ";"
                 )
-            except:
+            except BaseException as e:
                 print("UNABLE TO CONNECT")
+                print(e)
     else:
 
         try:
