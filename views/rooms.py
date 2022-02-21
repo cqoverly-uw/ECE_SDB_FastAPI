@@ -42,18 +42,28 @@ async def get_room_info(
 async def get_room_availability(
     request: Request,
     min_cap: Optional[int] = None,
-    max_cap: Optional[int] = None
+    max_cap: Optional[int] = None,
+    year: Optional[int] = None,
+    quarter: Optional[int] = None,
+    days: Optional[str] = None,
+    start_time: Optional[int] = None,
+    end_time: Optional[int] = None,
 ):
     if min_cap and max_cap:
         rooms_sql = sql_scripts.sql_room_search
         found_rooms = rooms.get_rooms_by_capacity(
             rooms_sql,
-            (min_cap, max_cap)
+            (min_cap, max_cap, year, quarter, days, start_time, end_time)
         )
 
         found_rooms["request"] = request
         found_rooms["min_cap"] = min_cap
-        found_rooms["max_cap"] = max_cap
+        found_rooms["year"] = max_cap
+        found_rooms["quarter"] = max_cap
+        found_rooms["start_time"] = max_cap
+        found_rooms["end_time"] = max_cap
+        found_rooms["days"] = max_cap
+        
 
         return templates.TemplateResponse(
             "rooms/room_search.html", found_rooms

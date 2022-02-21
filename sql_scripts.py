@@ -638,26 +638,103 @@ WHERE
 
 
 sql_room_search = """
-SELECT 
-	RTRIM(rm.sr_room_bldg) bldg,
-	RTRIM(rm.sr_room_room_no) room_no,
-	rm.sr_room_capacity
+SET NOCOUNT ON;
 
-FROM sec.sr_room_master rm
+DECLARE @YEAR SMALLINT;
+DECLARE @QTR TINYINT;
+DECLARE @START SMALLINT;
+DECLARE @END SMALLINT;
+DECLARE @DAYS VARCHAR(8);
+DECLARE @MIN_CAP SMALLINT;
+DECLARE @MAX_CAP SMALLINT;
 
-WHERE rm.sr_room_campus = 0
-AND rm.sr_room_gen_assgn = 1
-AND rm.sr_room_capacity BETWEEN ? AND ?
+SET @MIN_CAP = ?;
+SET @MAX_CAP = ?;
+SET @YEAR = ?;
+SET @QTR = ?;
+SET @DAYS = ?
+SET  @START = ?;
+SET @END = ?;
 
-ORDER BY rm.sr_room_bldg, rm.sr_room_room_no, rm.sr_room_capacity
+PRINT 'Start Time: ' + CONVERT(VARCHAR, @START);
+PRINT 'End Time: ' + CONVERT(VARCHAR, @END);
+
+
+WITH cte_sched AS (
+	SELECT 
+		mt.ts_year,
+		mt.ts_quarter,
+		mt.building,
+		mt.room_number,
+		mt.days_of_week,
+		mt.pm_indicator,
+		CASE 
+			WHEN TRY_CONVERT(SMALLINT, mt.start_time) < 800 THEN TRY_CONVERT(SMALLINT, mt.start_time) + 1200
+			ELSE TRY_CONVERT(SMALLINT, mt.start_time)
+		END start_t,
+		CASE 
+			WHEN TRY_CONVERT(SMALLINT, mt.end_time) < 800 THEN TRY_CONVERT(SMALLINT, mt.end_time) + 1200
+			ELSE TRY_CONVERT(SMALLINT, mt.end_time)
+		END end_t
+
+	FROM sec.time_sched_meeting_times mt
+
+	WHERE 
+		mt.ts_year = @YEAR AND
+		mt.ts_quarter = @QTR AND
+		mt.course_branch = 0
+
+		AND TRY_CONVERT(SMALLINT, mt.start_time) IS NOT NULL
+		AND mt.pm_indicator <> 'P'
+)
+
+SELECT DISTINCT
+	RTRIM(rs.building) bldg, 
+	TRIM(rs.room_number) room_no,
+	m.sr_room_capacity capacity
+
+FROM cte_sched rs 
+INNER JOIN sec.sr_room_master m
+ON 
+	(
+		rs.building = m.sr_room_bldg AND
+		TRIM(rs.room_number) = TRIM(m.sr_room_room_no)
+	)
+
+WHERE 
+	m.sr_room_gen_assgn = 1
+	AND m.sr_room_campus = 0
+	AND (m.sr_room_capacity BETWEEN @MIN_CAP AND @MAX_CAP)
+	AND CONCAT(RTRIM(rs.building), ' ', TRIM(rs.room_number)) NOT IN (
+
+
+	SELECT
+		CONCAT(RTRIM(s.building), ' ', TRIM(s.room_number))
+
+
+	FROM cte_sched s
+	INNER JOIN sec.sr_room_master rm
+	ON ((s.building = rm.sr_room_bldg) AND (TRIM(s.room_number) = TRIM(rm.sr_room_room_no)))
+
+	WHERE 
+		s.days_of_week LIKE '%['+@DAYS+']%' AND
+		(
+			(@START BETWEEN s.start_t AND s.end_t) OR 
+			(@END BETWEEN s.start_t AND s.end_t)
+		) AND
+	rm.sr_room_gen_assgn = 1
+	AND rm.sr_room_campus = 0
+
+)
+ORDER BY bldg, room_no
 ;
 """
 
 
 query_find_new_room = """
 SET NOCOUNT ON;
-DECLARE @SLN INT;
 
+DECLARE @SLN INT;
 DECLARE @YEAR SMALLINT;
 DECLARE @QTR TINYINT;
 DECLARE @START SMALLINT;
@@ -732,9 +809,6 @@ WITH cte_sched AS (
 			ELSE TRY_CONVERT(SMALLINT, mt.end_time)
 		END end_t
 
-	
-	
-
 	FROM sec.time_sched_meeting_times mt
 
 	WHERE 
@@ -774,7 +848,7 @@ WHERE
 	ON ((s.building = rm.sr_room_bldg) AND (TRIM(s.room_number) = TRIM(rm.sr_room_room_no)))
 
 	WHERE 
-		s.days_of_week LIKE '%[TR]%' AND
+		s.days_of_week LIKE '%['+@DAYS+']%' AND
 		(
 			(@START BETWEEN s.start_t AND s.end_t) OR 
 			(@END BETWEEN s.start_t AND s.end_t)
