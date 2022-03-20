@@ -74,7 +74,7 @@ async def get_student_info_from_sid(request: Request, sid: Optional[str] = Query
         )
 
 
-@router.get("/current_ee_undergrads.html/", response_class=HTMLResponse)
+@router.get("/current_ee_undergrads/", response_class=HTMLResponse)
 async def get_current_ee_undergrads(request: Request):
     sql: str = sql_scripts.current_ee_undergrads_query
     data: List[tuple] = students.get_current_ee_undergrads_data(sql)
