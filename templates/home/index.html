@@ -1,26 +1,8 @@
-<html>
-<head>
-    <title>ECE Advisor Home</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-
-</head>
-<body>
+{% extends "shared/base.html" %}
+{% block title %}ECE Advisor - Home{% endblock %}
+{% block body %}
     <div class="container-fluid">
-        <h2>Menu</h2>
         <ul>
-            <li class="listHeader"><h6>Student Information</h6></li>
-            <ul>
-                <li><a href="/student_info/">Find Student by SID or Email Address</a></li>
-                <li><a href="/current_ee_undergrads.html/">List Currently Registered EE Undergrads</a></li>
-                <li><a href="#">Placeholder</a></li>
-            </ul>
-            <li class="listHeader"><h6>Faculty Information</h6></li>
-            <ul>
-                <li><a href="/faculty_list/">Faculty List</a></li>
-                <li><a href="/faculty_code/">Find Faculty Code by Faculty Name & Year-Qtr</a></li>
-                <li><a href="fac_crs_history/">Faculty Course History</a></li>
-                <li><a href="#">Placeholder</a></li>
-            </ul>
             <li class="listHeader"><h6>Course Information</h6></li>
             <ul>
                 <li><a href="/course_info/">Single Course Information</a></li>
@@ -60,4 +42,5 @@
         </ul>
     </div>
 </body>
+{% endblock %}
 </html>
