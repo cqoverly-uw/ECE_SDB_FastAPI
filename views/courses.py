@@ -81,7 +81,7 @@ async def get_course_history(
         )
 
 
-@router.get("/joint_courses.html/", response_class=HTMLResponse)
+@router.get("/joint_courses/", response_class=HTMLResponse)
 async def get_joint_course_list(request: Request):
     sql: str = sql_scripts.joint_courses_query
     data: dict = courses.get_joint_course_data(sql)
