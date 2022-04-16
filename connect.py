@@ -42,7 +42,7 @@ def get_cursor():
             # print('No usable mssql driver. Attempting to connect via FreeTDS')
             # db = input('Enter database name: ')
             conn = pyodbc.connect(
-                f"DSN=uwsdb;DATABASE={database};UID={username};PWD={password};"
+                f"DSN=EDW;DATABASE={database};UID={username};PWD={password};"
             )
 
             # conn = pyodbc.connect('DSN=uwsdb;DATABASE='+database+';UID='+username+';PWD='+password+';')
