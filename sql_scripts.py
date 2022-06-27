@@ -277,6 +277,7 @@ course_history = """
 		mt.start_time,
 		--ts.ending_time,
 		mt.end_time,
+		(ts.maj_enroll_10 + ts.non_maj_enr_10),
 		ts.current_enroll,
 		ts.l_e_enroll,
 		ts.students_denied,
