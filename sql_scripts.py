@@ -15,7 +15,11 @@ info_from_sid = """
 			WHEN 2 THEN 'Tacoma'
 			ELSE 'X'
 		END campus,
-		cm.major_abbr,
+		(
+			SELECT STRING_AGG(cm.major_abbr, ', ') AS Result
+			FROM sec.student_1_college_major cm
+			WHERE s1.system_key = cm.system_key
+		),
 		cm.pathway,
 		cm.deg_level,
 		cm.deg_type,
