@@ -164,11 +164,19 @@ DECLARE @YEAR SMALLINT;
 DECLARE @QTR TINYINT;
 
 SET @YEAR = (
-	SELECT current_yr
+	SELECT
+		CASE
+			WHEN GETDATE() > gl_last_day_exams THEN gl_regis_year
+			ELSE current_yr
+		END
 	FROM sec.sdbdb01
 );
 SET @QTR = (
-	SELECT current_qtr
+	SELECT
+		CASE
+			WHEN GETDATE() > gl_last_day_exams THEN gl_regis_qtr
+			ELSE current_qtr
+		END
 	FROM sec.sdbdb01
 );
 
