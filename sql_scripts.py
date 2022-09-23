@@ -1,5 +1,24 @@
 # This is a place to put all the sql scripts used for the API
 
+
+# get the 'current' quarter: current quarter will be following
+# quarter if in a break between end of exams and before start of
+# classes the following quarter.
+current_qtr = """
+DECLARE @QTR_CODE SMALLINT;
+SET @QTR_CODE = (
+	SELECT
+		CASE
+			WHEN GETDATE() > c.gl_last_day_exams THEN ((c.gl_regis_year * 10) + c.gl_regis_qtr)
+			ELSE ((c.current_yr * 10) + c.current_qtr)
+		END qtr
+		
+	FROM sec.sdbdb01 c
+);
+SELECT @QTR_CODE qtr_code
+"""
+
+
 # STUDENT QUERIES
 info_from_sid = """
 	SELECT 
@@ -262,7 +281,7 @@ current_ee_undergrads_query = """
 """
 
 
-#COURSE QUERIES
+# COURSE QUERIES
 course_history = """
 	SELECT DISTINCT
 		ts.ts_year,
