@@ -16,7 +16,7 @@ database = r"UWSDBDataStore"
 # PWD = '<your password>'
 username = preferences.USERNAME
 password = preferences.PWD
-odbc_driver_path = preferences.ODBCDRIVER
+
 
 
 def get_cursor():
@@ -59,7 +59,7 @@ def get_cursor():
             print("Connected with FreeTDS DSN method")
 
         except pyodbc.InterfaceError:
-
+            odbc_driver_path = preferences.ODBCDRIVER
             conn = pyodbc.connect(
                 "DRIVER="
                 + odbc_driver_path
