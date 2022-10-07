@@ -255,7 +255,7 @@ current_ee_undergrads_query = """
 		a.e_mail_ucs uw_email,
 		s1.spp_qtrs_used,
 		CASE cm.pathway
-			WHEN 0 THEN CONCAT('00','-',cm.deg_level,cm.deg_type)
+			WHEN 0 THEN CONCAT('00','-',cm.major_abbr, '-',cm.deg_level,cm.deg_type)
 			ELSE CONCAT(cm.pathway,'-',cm.deg_level,cm.deg_type)
 		END degree,
 		CASE s1.tot_graded_attmp
@@ -280,7 +280,7 @@ current_ee_undergrads_query = """
 		SELECT TOP 1 sdb1.current_qtr
 		FROM sec.sdbdb01 sdb1
 	)
-	AND cm.major_abbr = 'E E'
+	AND cm.major_abbr IN ('E E', 'ECENG')
 	AND rc.request_status IN ('A' ,'C', 'R')
 	AND cm.branch = 0
 
