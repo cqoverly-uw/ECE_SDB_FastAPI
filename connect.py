@@ -18,6 +18,7 @@ username = preferences.USERNAME
 password = preferences.PWD
 
 
+
 def get_cursor():
 
     if os.name != "posix":
@@ -40,15 +41,37 @@ def get_cursor():
     else:
 
         try:
-            # print('No usable mssql driver. Attempting to connect via FreeTDS')
-            # db = input('Enter database name: ')
+            print("No usable mssql driver. Attempting to connect via FreeTDS")
+            # db = input("Enter database name: ")
             conn = pyodbc.connect(
                 f"DSN=EDW;DATABASE={database};UID={username};PWD={password};"
             )
 
-            # conn = pyodbc.connect('DSN=uwsdb;DATABASE='+database+';UID='+username+';PWD='+password+';')
+            # conn = pyodbc.connect(
+            #     "DSN=uwsdb;DATABASE="
+            #     + database
+            #     + ";UID="
+            #     + username
+            #     + ";PWD="
+            #     + password
+            #     + ";"
+            # )
+            print("Connected with FreeTDS DSN method")
 
-            # conn = pyodbc.connect('DRIVER={FreeTDS};SERVER=edwpub.s.uw.edu; PORT=1433;DATABASE='+database+';UID='+username+';PWD='+password+';')
+        except pyodbc.InterfaceError:
+            odbc_driver_path = preferences.ODBCDRIVER
+            conn = pyodbc.connect(
+                "DRIVER="
+                + odbc_driver_path
+                + ";SERVER=edwpub.s.uw.edu; PORT=1433;DATABASE="
+                + database
+                + ";UID="
+                + username
+                + ";PWD="
+                + password
+                + ";"
+            )
+            print("Connected with direct driver method!")
         except pyodbc.OperationalError:
             print("Not able to connect with provided methods")
             sys.exit()
