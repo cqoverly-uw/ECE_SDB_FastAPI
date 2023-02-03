@@ -1,80 +1,170 @@
 <html>
-<head>
+  <head>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
-<style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  </head>
+  <style>
     #uw_nav_link {
-        color: gold;
+      color: gold;
     }
-</style>
-<body>
-<nav class="navbar navbar-expand-lg" style="background-color: indigo;">
-    <a class="navbar-brand" id="uw_nav_link" href="#">ECE Advisor</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" id="uw_nav_link" href="/">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <!-- STUDENTS MENU-->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="uw_nav_link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Students
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="/student_info/">Student Info</a>
-            <a class="dropdown-item" href="/#">Future Placeholder</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/current_ee_undergrads/">All EE Undergrads</a>
-          </div>
-        </li>
-        <!-- FACULTY MENU-->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="uw_nav_link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Faculty
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/fac_crs_history/">Faculty Course History</a>
-              <a class="dropdown-item" href="/faculty_code/">Faculty Code Search</a>
+  </style>
+  <body>
+    <nav class="navbar navbar-expand-lg" style="background-color: indigo">
+      <a class="navbar-brand" id="uw_nav_link" href="#">ECE Advisor</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" id="uw_nav_link" href="/"
+              >Home <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <!-- STUDENTS MENU-->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              id="uw_nav_link"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Students
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/student_info/">Student Info</a>
+              <a class="dropdown-item" href="/#">Future Placeholder</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/current_ee_undergrads/"
+                >All EE Undergrads</a
+              >
+            </div>
+          </li>
+          <!-- FACULTY MENU-->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              id="uw_nav_link"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Faculty
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/fac_crs_history/"
+                >Faculty Course History</a
+              >
+              <a class="dropdown-item" href="/faculty_code/"
+                >Faculty Code Search</a
+              >
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/faculty_list/">Faculty List</a>
-          </div>
-        </li>
-        <!-- COURSES MENU-->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="uw_nav_link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Courses
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/course_info/">Single Course Information</a>
-              <a class="dropdown-item" href="/course_history/">Course History</a>
+            </div>
+          </li>
+          <!-- COURSES MENU-->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              id="uw_nav_link"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Courses
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/course_info/"
+                >Single Course Information</a
+              >
+              <a class="dropdown-item" href="/course_history/"
+                >Course History</a
+              >
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/joint_courses/">Joint Courses Information</a>
-              <a class="dropdown-item" href="https://docs.google.com/spreadsheets/d/1dZSb9V977hEZJcDBGMMfYigskvfT-h7EOpa7lqlmkjg/edit?usp=sharing">Shared Graduate Controls Courses Sheet</a>
-              <a class="dropdown-item" href="https://docs.google.com/spreadsheets/d/10jmuvcsF0VRj008C3CCY4ImOicnbI2nwteR5yql_jDE/edit?usp=sharing">Stephanie's Historical Enrollment Sheet</a>
-              <a class="dropdown-item" href="https://www.ece.uw.edu/wp-content/uploads/2022/05/Concentration-Areas-Chart-SUM2022.pdf">Concentrations Chart</a>
-              <a class="dropdown-item" href="https://vannevar.ece.uw.edu/operations/advising/advising_tools/EE_Courses_Prereq_Tree.drawio.html">Prerequisite Flowchart</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-      </ul>
-      <form class="form-inline my-2 my-lg-0" action="/student_info/">
-        <input class="form-control mr-sm-2" id="sid" name="sid" aria-label="Search" placeholder="SID or Email">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    </div>
-</nav>
-<hr size="6" color="gold">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
-{% block body %}
-{% endblock %}
+              <a class="dropdown-item" href="/joint_courses/"
+                >Joint Courses Information</a
+              >
+              <a
+                class="dropdown-item"
+                href="https://docs.google.com/spreadsheets/d/1dZSb9V977hEZJcDBGMMfYigskvfT-h7EOpa7lqlmkjg/edit?usp=sharing"
+                >Shared Graduate Controls Courses Sheet</a
+              >
+              <a
+                class="dropdown-item"
+                href="https://docs.google.com/spreadsheets/d/10jmuvcsF0VRj008C3CCY4ImOicnbI2nwteR5yql_jDE/edit?usp=sharing"
+                >Stephanie's Historical Enrollment Sheet</a
+              >
+              <a
+                class="dropdown-item"
+                href="https://www.ece.uw.edu/wp-content/uploads/2022/05/Concentration-Areas-Chart-SUM2022.pdf"
+                >Concentrations Chart</a
+              >
+              <a
+                class="dropdown-item"
+                href="https://vannevar.ece.uw.edu/operations/advising/advising_tools/EE_Courses_Prereq_Tree.drawio.html"
+                >Prerequisite Flowchart</a
+              >
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" action="/student_info/">
+          <input
+            class="form-control mr-sm-2"
+            id="sid"
+            name="sid"
+            aria-label="Search"
+            placeholder="SID or Email"
+          />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            Search
+          </button>
+        </form>
+      </div>
+    </nav>
+    <hr size="6" color="gold" />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+  {% block body %} {% endblock %}
 </html>

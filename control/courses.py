@@ -45,10 +45,12 @@ def get_single_course_info(sql: str, params: tuple) -> dict:
             "long_title": data[7],
             "resp_crs": data[8],
             "diversity": data[9],
-            "i_and_s": data[10],
-            "vis_lit_perf_arts": data[11],
-            "eng_comp": data[12],
-            "writing": data[13],
+            "nat_sci": data[10],
+            "soc_sci": data[11],
+            "arts_hum": data[12],
+            "rsn": data[13],
+            "eng_comp": data[14],
+            "writing": data[15],
         }
     except IndexError:
         return {}

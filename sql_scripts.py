@@ -517,8 +517,10 @@ single_course_info = """
 			ELSE CONCAT(ct.resp_curric_abbr, resp_course_no)
 		END resp_course,
 		ct.diversity_crs,
-		ct.indiv_society,
-		ct.vis_lit_perf_arts,
+		ct.natural_science,
+		ct.social_science,
+		ct.arts_hum,
+		ct.rsn,
 		ct.english_comp,
 		ct.writing_crs
 
