@@ -1,59 +1,59 @@
-{% extends "shared/base.html" %}
-{% block title %}Course Info{% endblock %}
-{% block body %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <div>
-                    <form>
-                        <p></p>
-                        <label for="dept"><h6>Curriculum Abbrev: </h6></label><br>
-                        <input type="text" id="dept" name="dept" value='E E'><br><br>
-                        <label for="crs_number"><h6>Course No.: </h6></label><br>
-                        <input type="text" id="crs_number" name="crs_number" value="{{ crs_number }}"" autofocus><br><br>
-                        <p><input type="submit"></p>
-                    </form>
-                </div>
-            </div>
-            <div class="col">
-            </div>
-            <div class="col">
-            </div>
-        </div>
-        <div class="row">   
-            <div class="col">
-                <div>
-                <h3>{{ dept }} {{ crs_number }}</h3>
-                <h5> {{ long_title }}</h5>
-                <ul>
-                    <li>Course Joins: {{ joined_courses }}</li>
-                    <li>Min. Credits: {{ min_credits }}</li>
-                    <li>Max. Credits: {{ max_credit }}</li>
-                    <li>Credit Ctrl.: {{ credit_ctrl }}</li>
-                    <li>Grade Sys.: {{ grade_sys }}</li>
-                    <li>Short Title: {{ short_title }}</li>
-                    <li>Resp. Course: {{ resp_crs }}</li>
-                    <li>Div. Credit: {{ diversity }}</li>
-                    <li>I & S: {{ i_and_s }}</li>
-                    <li>Vis. Lit.: {{ vis_lit_perf_arts }}</li>
-                    <li>Eng. Comp: {{ enl_comp }}</li>
-                    <li>Writing: {{ writing }}</li>
-                </ul>
-                </div>
-            </div>
-            <div class="col">
-                <p></p>
-                <h4>Prerequisites</h4>
-                <ul>
-                {% for prereq in prereqs %}
-                    <li>{{ prereq }}</li>
-                {% endfor %}
-                </ul>
-            </div>
-            <div class="col">
-                <p></p>
-                <h4>More Information</h4>
-            </div>
-        </div>     
+{% extends "shared/base.html" %} {% block title %}Course Info{% endblock %} {%
+block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div>
+        <form>
+          <p></p>
+          <label for="dept"><h6>Curriculum Abbrev:</h6></label><br />
+          <input type="text" id="dept" name="dept" value="E E" /><br /><br />
+          <label for="crs_number"><h6>Course No.:</h6></label><br />
+          <input type="text" id="crs_number" name="crs_number" value="{{
+          crs_number }}"" autofocus><br /><br />
+          <p><input type="submit" /></p>
+        </form>
+      </div>
     </div>
+    <div class="col"></div>
+    <div class="col"></div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div>
+        <h3>{{ dept }} {{ crs_number }}</h3>
+        <h5>{{ long_title }}</h5>
+        <ul>
+          <li>Course Joins: {{ joined_courses }}</li>
+          <li>Min. Credits: {{ min_credits }}</li>
+          <li>Max. Credits: {{ max_credit }}</li>
+          <li>Credit Ctrl.: {{ credit_ctrl }}</li>
+          <li>Grade Sys.: {{ grade_sys }}</li>
+          <li>Short Title: {{ short_title }}</li>
+          <li>Resp. Course: {{ resp_crs }}</li>
+          <li>Div. Credit: {{ diversity }}</li>
+          <li>Nat. Science: {{ nat_sci }}</li>
+          <li>Soc. Science: {{ soc_sci }}</li>
+          <li>Arts. Hum.: {{ arts_hum }}</li>
+          <li>Reasoning: {{ rsn }}</li>
+          <li>Eng. Comp: {{ enl_comp }}</li>
+          <li>Writing: {{ writing }}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <p></p>
+      <h4>Prerequisites</h4>
+      <ul>
+        {% for prereq in prereqs %}
+        <li>{{ prereq }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col">
+      <p></p>
+      <h4>More Information</h4>
+    </div>
+  </div>
+</div>
 {% endblock %}
